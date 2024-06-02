@@ -1,0 +1,15 @@
+## Interface: 40400
+## Author: Debuger
+## Version: 0.3.14
+## Title: DEBUGER
+## Notes: |cFFFF0000D|r|cFF00FF00E|r|cFF0000FFB|r|cFFFFFF00U|r|cFF00FFFFG|r|cFFFF00FFE|rR
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## eMail: debuger@debuger.eu
+## URL: https://debuger.eu/wow/debuger.zip
+## X-URL: https://debuger.eu/wow/debuger.zip
+## X-License: GPL3
+## X-Category: Miscellaneous
+## X-Curse-Project-ID: 1028809
+
+debuger.lua
