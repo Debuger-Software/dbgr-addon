@@ -1,4 +1,8 @@
----@diagnostic disable: inject-field, deprecated, undefined-global
+---@diagnostic disable: inject-field, deprecated, undefined-global, param-type-mismatch
+
+local ADDON_NAME = "DBGR"
+local ADDON_VERSION = "0.4.1"
+local ADDON_REL_TYPE = "BETA"
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -39,19 +43,19 @@ local function eventHandler(self, event, ...)
 end
 
 local function create_MsgBox()
-	local	MsgBox = CreateFrame("Frame","dbgr_msgbox",UIParent, "GlowBoxTemplate")
+	local	MsgBox = CreateFrame("Frame","DBGR_msgbox",UIParent, "GlowBoxTemplate")
 			MsgBox:SetFrameStrata("BACKGROUND")
 			MsgBox:SetSize(300, 100)
 			MsgBox:SetPoint("CENTER",0,0)
 			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 			MsgBox.header:SetPoint("TOP",0,-10)
 			MsgBox.header:SetTextScale(1.1)
-			MsgBox.header:SetText("DBGR Addon")
+			MsgBox.header:SetText(string.format("%s %s (%s)",ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE))
 			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 			MsgBox.text:SetPoint("CENTER",0,0)
 			MsgBox.text:SetTextScale(1.0)
 			MsgBox.text:SetText("Lorem Ipsum, (...)")
-			MsgBox.btn = CreateFrame("Button","dbgr_msgbox_btn",MsgBox,"UIPanelButtonTemplate");
+			MsgBox.btn = CreateFrame("Button","DBGR_msgbox_btn",MsgBox,"UIPanelButtonTemplate");
 			MsgBox.btn:RegisterForClicks("AnyUp");
 			MsgBox.btn:SetSize(60,25);
 			MsgBox.btn:SetPoint("BOTTOM",0,8)
@@ -82,8 +86,8 @@ local	frame = CreateFrame("Frame")
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
 ChatFrame1EditBox:SetAltArrowKeyMode(false);
 
-SLASH_DBGR1 = "/dbgr"
-function SlashCmdList.DBGR(msg, editbox)
+SLASH_DBFRAME1 = "/dbgr"
+function SlashCmdList.DBFRAME(msg, editbox)
 	local talentGroup = GetActiveTalentGroup(false, false)
 	local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
 	if free_talent > 0 then		MsgBox.text:SetText(string.format("You have free %d unspent talent points!",free_talent));		end
