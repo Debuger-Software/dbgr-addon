@@ -1,8 +1,8 @@
 ## Interface: 40400
 ## Author: Debuger
-## Version: 0.3.8
-## Title: DEBUGER
-## Notes: |cFFFF0000D|r|cFF00FF00E|r|cFF0000FFB|r|cFFFFFF00U|r|cFF00FFFFG|r|cFFFF00FFE|rR
+## Version: 0.4.0
+## Title: DBGR
+## Notes: |cFFFF0000D|r|cFF00FF00B|r|cFF0000FFG|r|cFFFFFF00R|r
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## eMail: debuger@debuger.eu

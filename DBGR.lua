@@ -1,15 +1,17 @@
+---@diagnostic disable: inject-field, deprecated, undefined-global
+
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
 	local 	function iconForLink(link)
 		local texture = GetItemIcon(link)
-		return "\124T"..texture..":28\124t"..link
+		return "\124T"..texture..":30\124t"..link
 	end
 	msg = string.gsub(msg,"(\124c%x+\124Hitem:.-\124h\124r)",iconForLink)
 	return false, msg:gsub("You receive loot:","Loot :   "), ...
 end
 
-function showAlertOnScreen(text,r,g,b,t,f,top)
-	local	msg = CreateFrame("MessageFrame", "debugeralert", UIParent)
+local function showAlertOnScreen(text,r,g,b,t,f,top)
+	local	msg = CreateFrame("MessageFrame", "DBGRalert", UIParent)
 			msg:SetWidth(1000);
 			msg:SetHeight(500);
 			msg:SetPoint("TOP", 0, -200);
@@ -23,7 +25,7 @@ function showAlertOnScreen(text,r,g,b,t,f,top)
 			msg:AddMessage(text, r, g, b)
 end
 
-function eventHandler(self, event, ...)
+local function eventHandler(self, event, ...)
 	if event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
 		local xpgained = text:match("(%d+)")
@@ -36,15 +38,19 @@ function eventHandler(self, event, ...)
 	end
 end
 
-function create_MsgBox()
+local function create_MsgBox()
 	local	MsgBox = CreateFrame("Frame","dbgr_msgbox",UIParent, "GlowBoxTemplate")
 			MsgBox:SetFrameStrata("BACKGROUND")
 			MsgBox:SetSize(300, 100)
 			MsgBox:SetPoint("CENTER",0,0)
-			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-			MsgBox.text:SetPoint("TOP",0,-10)
-			MsgBox.text:SetTextScale(1.1)
-			MsgBox.text:SetText("Debuger Addon")
+			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+			MsgBox.header:SetPoint("TOP",0,-10)
+			MsgBox.header:SetTextScale(1.1)
+			MsgBox.header:SetText("DBGR Addon")
+			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+			MsgBox.text:SetPoint("CENTER",0,0)
+			MsgBox.text:SetTextScale(1.0)
+			MsgBox.text:SetText("Lorem Ipsum, (...)")
 			MsgBox.btn = CreateFrame("Button","dbgr_msgbox_btn",MsgBox,"UIPanelButtonTemplate");
 			MsgBox.btn:RegisterForClicks("AnyUp");
 			MsgBox.btn:SetSize(60,25);
@@ -78,5 +84,8 @@ ChatFrame1EditBox:SetAltArrowKeyMode(false);
 
 SLASH_DBGR1 = "/dbgr"
 function SlashCmdList.DBGR(msg, editbox)
+	local talentGroup = GetActiveTalentGroup(false, false)
+	local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
+	if free_talent > 0 then		MsgBox.text:SetText(string.format("You have free %d unspent talent points!",free_talent));		end
 	MsgBox:Show()
 end

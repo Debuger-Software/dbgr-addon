@@ -1,6 +1,6 @@
-**Addon show additional info on chat when gain exp and item icons when loot.**
+__Addon show additional info on chat when gain exp and item icons when loot.__
 
-**Gained XP points, required repeats to next level, gained XP in percent, current XP status in percent.**
+*Gained XP points, required repeats to next level, gained XP in percent, current XP status in percent.*
 
 
 __**Example**__:
