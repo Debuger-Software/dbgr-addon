@@ -1,8 +1,9 @@
 ---@diagnostic disable: inject-field, deprecated, undefined-global, param-type-mismatch
 
 local ADDON_NAME = "DBGR"
-local ADDON_VERSION = "0.4.1"
+local ADDON_VERSION = "0.4.2"
 local ADDON_REL_TYPE = "BETA"
+local LOGO = "Interface\\AddOns\\DBGR\\img\\d"
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -29,39 +30,26 @@ local function showAlertOnScreen(text,r,g,b,t,f,top)
 			msg:AddMessage(text, r, g, b)
 end
 
-local function eventHandler(self, event, ...)
-	if event == "CHAT_MSG_COMBAT_XP_GAIN" then
-		local text, _ = ...
-		local xpgained = text:match("(%d+)")
-		local xp = UnitXP("player")
-		local maxXp=UnitXPMax("player")
-		local percent = tonumber(format("%.1f", (xpgained/maxXp)*100))
-		local percent_total = tonumber(format("%.1f", (xp/maxXp)*100) + percent)
-		print(string.format("\r\nEXP:|cFFFFEE00 +%d|r|cFFEE0000 (-%.1fx)|r       |cFF22FF15 +%.1f%%|r        TOTAL:|cFF00FFFF %.1f%%|r \r\n", xpgained, (100 - percent_total)/percent, percent, percent_total))
-		showAlertOnScreen(string.format("+%.1f%%",percent),0,255,0,3,1,50)
-	end
-end
-
 local function create_MsgBox()
 	local	MsgBox = CreateFrame("Frame","DBGR_msgbox",UIParent, "GlowBoxTemplate")
 			MsgBox:SetFrameStrata("BACKGROUND")
 			MsgBox:SetSize(300, 100)
 			MsgBox:SetPoint("CENTER",0,0)
-			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-			MsgBox.header:SetPoint("TOP",0,-10)
+			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
+			MsgBox.header:SetPoint("TOP",0,-7)
 			MsgBox.header:SetTextScale(1.1)
-			MsgBox.header:SetText(string.format("%s %s (%s)",ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE))
-			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+			MsgBox.header:SetText(string.format("|T%s:19|t                     %s %s (%s)                     |T%s:19|t",LOGO,ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE,LOGO))
+			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 			MsgBox.text:SetPoint("CENTER",0,0)
 			MsgBox.text:SetTextScale(1.0)
-			MsgBox.text:SetText("Lorem Ipsum, (...)")
+			MsgBox.text:SetText("")
 			MsgBox.btn = CreateFrame("Button","DBGR_msgbox_btn",MsgBox,"UIPanelButtonTemplate");
 			MsgBox.btn:RegisterForClicks("AnyUp");
-			MsgBox.btn:SetSize(60,25);
-			MsgBox.btn:SetPoint("BOTTOM",0,8)
-			MsgBox.btn:SetNormalFontObject("GameFontNormal");
-			MsgBox.btn:SetHighlightFontObject("GameFontHighlight");
-			MsgBox.btn:SetDisabledFontObject("GameFontDisable");
+			MsgBox.btn:SetSize(50,20);
+			MsgBox.btn:SetPoint("BOTTOM",0,6)
+			MsgBox.btn:SetNormalFontObject("GameFontNormalSmall");
+			MsgBox.btn:SetHighlightFontObject("GameFontHighlightSmall");
+			MsgBox.btn:SetDisabledFontObject("GameFontDisableSmall");
 			MsgBox.btn:SetText(" OK ");
 			MsgBox.btn:SetScript("OnClick", function() MsgBox:Hide(); end )
 			MsgBox.btn:Show()
@@ -75,21 +63,49 @@ local function create_MsgBox()
 	return 	MsgBox
 end
 
-
+local function eventHandler(self, event, ...)
+	if event == "CHAT_MSG_COMBAT_XP_GAIN" then
+		local text, _ = ...
+		local xpgained = text:match("(%d+)")
+		local xp = UnitXP("player")
+		local maxXp=UnitXPMax("player")
+		local percent = tonumber(format("%.1f", (xpgained/maxXp)*100))
+		local percent_total = tonumber(format("%.1f", (xp/maxXp)*100) + percent)
+		print(string.format("\r\nEXP:|cFFFFEE00 +%d|r|cFFEE0000 (-%.1fx)|r       |cFF22FF15 +%.1f%%|r        TOTAL:|cFF00FFFF %.1f%%|r \r\n", xpgained, (100 - percent_total)/percent, percent, percent_total))
+		showAlertOnScreen(string.format("+%.1f%%",percent),0,255,0,3,1,50)
+	elseif event == "PLAYER_LEVEL_UP" then
+		local talentGroup = GetActiveTalentGroup(false, false)
+		local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
+		if free_talent > 0 then
+			MsgBox.text:SetText(string.format("You have free %d unspent talent points!",free_talent))
+			MsgBob:Show()
+		end
+	elseif event == "CHAT_MSG_SYSTEM" then
+		local text, _ = ...
+		if string.find(text, "buyer") then
+			local extracted = string.match(text, "auction of (.*).")
+			if MsgBox:IsShown() then
+				MsgBox.text:SetText(string.format("%s, %s",MsgBox.text:GetText(), extracted))
+			else
+				MsgBox.text:SetText(string.format("AH item sell: %s", extracted))
+			end
+			MsgBox:Show()
+		end
+	end
+end
 -- ===================================================================================================================================================================================================
 
-local	MsgBox = create_MsgBox()
 local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
+		frame:RegisterEvent("PLAYER_LEVEL_UP")
+		frame:RegisterEvent("CHAT_MSG_SYSTEM")
 		frame:SetScript("OnEvent", eventHandler)
+MsgBox = create_MsgBox()
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
 ChatFrame1EditBox:SetAltArrowKeyMode(false);
 
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
-	local talentGroup = GetActiveTalentGroup(false, false)
-	local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
-	if free_talent > 0 then		MsgBox.text:SetText(string.format("You have free %d unspent talent points!",free_talent));		end
-	MsgBox:Show()
+	if msg == "" then	MsgBox:Show();	end		-- show last message in frame
 end
