@@ -3,7 +3,7 @@
 local ADDON_NAME = "DBGR"
 local ADDON_VERSION = "0.4.3"
 local ADDON_REL_TYPE = "BETA"
-local LOGO = "Interface\\AddOns\\DBGR\\img\\d"
+local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -38,7 +38,7 @@ local function create_MsgBox()
 			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
 			MsgBox.header:SetPoint("TOP",0,-7)
 			MsgBox.header:SetTextScale(1.1)
-			MsgBox.header:SetText(string.format("|T%s:19|t                     %s %s (%s)                     |T%s:19|t",LOGO,ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE,LOGO))
+			MsgBox.header:SetText(string.format("%s               %s %s (%s)               %s",LOGO(18),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE,LOGO(18)))
 			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 			MsgBox.text:SetPoint("CENTER",0,0)
 			MsgBox.text:SetTextScale(1.0)
@@ -60,6 +60,11 @@ local function create_MsgBox()
 			MsgBox:SetScript("OnDragStart", function(self)	self:StartMoving();	end)
 			MsgBox:SetScript("OnDragStop", function(self)	self:StopMovingOrSizing();	end)	
 			MsgBox:Hide()
+			MsgBox.showMsgBox = function (self,text,title)
+				if title and title ~= "" then self.header:SetText(tostring(title)) end
+				if text and text ~= "" then self.text:SetText(tostring(text)) end
+				self:Show()
+			end
 	return 	MsgBox
 end
 
@@ -78,18 +83,17 @@ local function eventHandler(self, event, ...)
 		local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
 		if free_talent > 0 then
 			MsgBox.text:SetText(string.format("You have free %d unspent talent points!",free_talent))
-			MsgBob:Show()
+			MsgBox:Show()
 		end
 	elseif event == "CHAT_MSG_SYSTEM" then
 		local text, _ = ...
 		if string.find(text, "buyer") then
 			local extracted = string.match(text, "auction of (.*).")
 			if MsgBox:IsShown() then
-				MsgBox.text:SetText(string.format("%s, %s",MsgBox.text:GetText(), extracted))
+				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), extracted), "Auction House")
 			else
-				MsgBox.text:SetText(string.format("AH item sell: %s", extracted))
+				MsgBox:showMsgBox(string.format("AH item sell: %s", extracted), "Auction House")
 			end
-			MsgBox:Show()
 		end
 	end
 end
@@ -107,5 +111,5 @@ ChatFrame1EditBox:SetAltArrowKeyMode(false);
 
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
-	if msg == "" then	MsgBox:Show();	end		-- show last message in frame
+	if msg == "" then	MsgBox:showMsgBox();	end		-- show last message in frame
 end
