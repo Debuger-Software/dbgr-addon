@@ -1,6 +1,6 @@
 ## Interface: 40400
 ## Author: Debuger
-## Version: 0.4.2
+## Version: 0.4.3
 ## Title: DBGR
 ## Notes: |cFFFF0000D|r|cFF00FF00B|r|cFF0000FFG|r|cFFFFFF00R|r
 ## DefaultState: Enabled

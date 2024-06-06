@@ -1,7 +1,7 @@
 ---@diagnostic disable: inject-field, deprecated, undefined-global, param-type-mismatch
 
 local ADDON_NAME = "DBGR"
-local ADDON_VERSION = "0.4.2"
+local ADDON_VERSION = "0.4.3"
 local ADDON_REL_TYPE = "BETA"
 local LOGO = "Interface\\AddOns\\DBGR\\img\\d"
 
