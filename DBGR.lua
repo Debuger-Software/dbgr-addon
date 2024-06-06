@@ -9,10 +9,15 @@ function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
 	local 	function iconForLink(link)
 		local texture = GetItemIcon(link)
-		return "\124T"..texture..":30\124t"..link
+		return string.format(" %s \124T%s:24\124t  ",link,texture)
 	end
 	msg = string.gsub(msg,"(\124c%x+\124Hitem:.-\124h\124r)",iconForLink)
-	return false, msg:gsub("You receive loot:","Loot :   "), ...
+	--Make: [Iron Bar]   .
+	msg = msg:gsub("You receive loot: ","Loot:")
+	msg = msg:gsub("You receive item: ","Loot:")
+	msg = msg:gsub("You create: ","Make:")
+	msg = msg:sub(1,-2)
+	return false, msg, ...
 end
 
 local function showAlertOnScreen(text,r,g,b,t,f,top)
@@ -38,7 +43,7 @@ local function create_MsgBox()
 			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
 			MsgBox.header:SetPoint("TOP",0,-7)
 			MsgBox.header:SetTextScale(1.1)
-			MsgBox.header:SetText(string.format("%s               %s %s (%s)               %s",LOGO(18),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE,LOGO(18)))
+			MsgBox.header:SetText(string.format("%s               %s %s (%s)               %s",LOGO(16),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE,LOGO(16)))
 			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 			MsgBox.text:SetPoint("CENTER",0,0)
 			MsgBox.text:SetTextScale(1.0)
@@ -65,6 +70,7 @@ local function create_MsgBox()
 				if text and text ~= "" then self.text:SetText(tostring(text)) end
 				self:Show()
 			end
+			MsgBox.opener = nil
 	return 	MsgBox
 end
 
@@ -87,13 +93,23 @@ local function eventHandler(self, event, ...)
 		end
 	elseif event == "CHAT_MSG_SYSTEM" then
 		local text, _ = ...
-		if string.find(text, "buyer") then
-			local extracted = string.match(text, "auction of (.*).")
-			if MsgBox:IsShown() then
+		if text:find("buyer") then
+			local extracted = text:match("auction of (.*).")
+			if MsgBox:IsShown() and MsgBox.opener == "AH_SELL" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), extracted), "Auction House")
 			else
 				MsgBox:showMsgBox(string.format("AH item sell: %s", extracted), "Auction House")
 			end
+			MsgBox.opener = "AH_SELL"
+		end
+		if text:find("outbid") then
+			local outbid_item = text:match("outbid on (.*).")
+			if MsgBox:IsShown() and MsgBox.opener == "AH_OUTBID" then
+				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), outbid_item), "Auction House")
+			else
+				MsgBox:showMsgBox(string.format("OUTBID: %s", outbid_item), "Auction House")
+			end
+				MsgBox.opener = "AH_OUTBID"
 		end
 	end
 end
