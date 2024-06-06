@@ -6,6 +6,7 @@
 <li>item icons when loot.</li>
 <li>extended info when gain exp</li>
 </ul>
+<p>&nbsp;</p>
 <p><span style="font-size: 14px; font-family: 'andale mono', monospace;"><strong>Gained XP points, required repeats to next level, gained XP in percent, current XP status in percent.</strong></span></p>
 <p style="text-align: center;"><span style="text-decoration: underline;"><strong>Example:</strong></span></p>
 <img src="https://debuger.eu/wow/debuger_addon_screen-1.png" />
