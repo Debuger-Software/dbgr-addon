@@ -40,6 +40,7 @@ local function create_MsgBox()
 			MsgBox:SetFrameStrata("BACKGROUND")
 			MsgBox:SetSize(300, 100)
 			MsgBox:SetPoint("CENTER",0,0)
+			MsgBox.opener = nil
 			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
 			MsgBox.header:SetPoint("TOP",0,-7)
 			MsgBox.header:SetTextScale(1.1)
@@ -55,8 +56,8 @@ local function create_MsgBox()
 			MsgBox.btn:SetNormalFontObject("GameFontNormalSmall");
 			MsgBox.btn:SetHighlightFontObject("GameFontHighlightSmall");
 			MsgBox.btn:SetDisabledFontObject("GameFontDisableSmall");
-			MsgBox.btn:SetText(" OK ");
-			MsgBox.btn:SetScript("OnClick", function() MsgBox:Hide(); end )
+			MsgBox.btn:SetText("OK");
+			MsgBox.btn:SetScript("OnClick", function() MsgBox:Hide(); MsgBox.opener = nil; end )
 			MsgBox.btn:Show()
 			MsgBox:EnableMouse(true)
 			MsgBox:SetResizable(true)
@@ -70,7 +71,6 @@ local function create_MsgBox()
 				if text and text ~= "" then self.text:SetText(tostring(text)) end
 				self:Show()
 			end
-			MsgBox.opener = nil
 	return 	MsgBox
 end
 
