@@ -83,7 +83,7 @@ local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
 		if loadedAddon == ADDON_NAME then
-			if DBGROPT == nil then DBGROPT = {sound=true ,icon_size=24}; end							-- defaulting non existing options
+			if DBGROPT == nil then DBGROPT = {sound=true ,icon_size=24}; end												-- defaulting non existing options
 		end
 	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
