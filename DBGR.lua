@@ -8,16 +8,12 @@ local TIME_REQ = false
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
-	local 	function iconForLink(link)
-		local texture = GetItemIcon(link)
-		return string.format(" %s \124T%s:%s\124t  ",link,texture,DBGROPT.icon_size)
-	end
+	local 	function iconForLink(link)	return string.format(" %s \124T%s:%s\124t  ",link,GetItemIcon(link),DBGROPT.icon_size);	end
 	msg = string.gsub(msg,"(\124c%x+\124Hitem:.-\124h\124r)",iconForLink)
 	msg = msg:gsub("You receive loot: ","Loot:")
 	msg = msg:gsub("You receive item: ","Loot:")
 	msg = msg:gsub("You create: ","Make:")
-	msg = msg:sub(1,-2)
-	return false, msg, ...
+	return false, msg:sub(1,-2), ...
 end
 
 local function showAlertOnScreen(text,r,g,b,t,f,top)
