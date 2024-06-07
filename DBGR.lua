@@ -146,16 +146,9 @@ ChatFrame1EditBox:SetAltArrowKeyMode(false);
 
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
-	if msg == "" then	MsgBox:showMsgBox();	end														-- show last message in frame
-	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end
-	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..v);	end; end					-- show current saved variables
-	if msg:match("set (.*) ") then																		-- set string variable 	"TEXT"
-		print(format("set ['%s'] = '%s'",msg:match("set (.*) \".*\""),msg:match("set .* \"(.*)\"")))
-		DBGROPT[msg:match("set (.*) \".*\"")] = msg:match("set .* \"(.*)\"")
-	end
-	if msg:match("setnum (.*) ") then 																	-- set numeric variable	123
-		print(format("setnum ['%s'] = %d",msg:match("setnum (.*) .*"),msg:match("setnum .* ([0-9]+)")))
-		DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)"))
-	end
-
+	if msg == "" then	MsgBox:showMsgBox();	end																			-- show last message in frame
+	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
+	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..v);	end; end										-- show current saved variables
+	if msg:match("set (.*) ") then DBGROPT[msg:match("set (.*) \".*\"")] = msg:match("set .* \"(.*)\"") end 				-- set string variable 	"TEXT"
+	if msg:match("setnum (.*) ") then DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)")); end	-- set numeric variable	123
 end
