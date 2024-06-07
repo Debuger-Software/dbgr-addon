@@ -1,18 +1,20 @@
 ---@diagnostic disable: inject-field, deprecated, undefined-global, param-type-mismatch
 
 local ADDON_NAME = "DBGR"
-local ADDON_VERSION = "0.4.3"
-local ADDON_REL_TYPE = "BETA"
+local ADDON_VERSION = GetAddOnMetadata(ADDON_NAME, "Version")
+local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
+
+
+local TIME_REQ = false
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
 	local 	function iconForLink(link)
 		local texture = GetItemIcon(link)
-		return string.format(" %s \124T%s:24\124t  ",link,texture)
+		return string.format(" %s \124T%s:%s\124t  ",link,texture,DBGROPT.icon_size)
 	end
 	msg = string.gsub(msg,"(\124c%x+\124Hitem:.-\124h\124r)",iconForLink)
-	--Make: [Iron Bar]   .
 	msg = msg:gsub("You receive loot: ","Loot:")
 	msg = msg:gsub("You receive item: ","Loot:")
 	msg = msg:gsub("You create: ","Make:")
@@ -69,13 +71,27 @@ local function create_MsgBox()
 			MsgBox.showMsgBox = function (self,text,title)
 				if title and title ~= "" then self.header:SetText(tostring(title)) end
 				if text and text ~= "" then self.text:SetText(tostring(text)) end
+				if DBGROPT.sound ~= 0 then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
 				self:Show()
 			end
 	return 	MsgBox
 end
 
+local function SecondsToTime(time)
+	local days = floor(time/86400)
+	local hours = floor(mod(time, 86400)/3600)
+	local minutes = floor(mod(time,3600)/60)
+	local seconds = floor(mod(time,60))
+	return format("%dd, %02dh  %02dm  %02ds",days,hours,minutes,seconds)
+end
+
 local function eventHandler(self, event, ...)
-	if event == "CHAT_MSG_COMBAT_XP_GAIN" then
+	if event == "ADDON_LOADED" then
+		local loadedAddon = ...
+		if loadedAddon == ADDON_NAME then
+			if DBGROPT == nil then DBGROPT = {sound=true ,icon_size=24}; end		-- defaulting non existing options
+		end
+	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
 		local xpgained = text:match("(%d+)")
 		local xp = UnitXP("player")
@@ -87,9 +103,12 @@ local function eventHandler(self, event, ...)
 	elseif event == "PLAYER_LEVEL_UP" then
 		local talentGroup = GetActiveTalentGroup(false, false)
 		local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
-		if free_talent > 0 then
-			MsgBox.text:SetText(string.format("You have free %d unspent talent points!",free_talent))
-			MsgBox:Show()
+		if free_talent > 0 then	MsgBox:showMsgBox(string.format("You have free %d unspent talent points!",free_talent)) end
+	elseif event == "TIME_PLAYED_MSG" then
+		if TIME_REQ then
+			local timeTotal, timeCurLvl = ...
+			MsgBox:showMsgBox(string.format("Total:  %s\nLevel:  %s",SecondsToTime(timeTotal),SecondsToTime(timeCurLvl)),"Play time statistics")
+			TIME_REQ = false
 		end
 	elseif event == "CHAT_MSG_SYSTEM" then
 		local text, _ = ...
@@ -116,9 +135,11 @@ end
 -- ===================================================================================================================================================================================================
 
 local	frame = CreateFrame("Frame")
+		frame:RegisterEvent("ADDON_LOADED")
 		frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
 		frame:RegisterEvent("PLAYER_LEVEL_UP")
 		frame:RegisterEvent("CHAT_MSG_SYSTEM")
+		frame:RegisterEvent("TIME_PLAYED_MSG")
 		frame:SetScript("OnEvent", eventHandler)
 MsgBox = create_MsgBox()
 
@@ -128,4 +149,15 @@ ChatFrame1EditBox:SetAltArrowKeyMode(false);
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
 	if msg == "" then	MsgBox:showMsgBox();	end		-- show last message in frame
+	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end
+	if msg == "get" then for k, v in pairs(DBGROPT) do print(k, v);	end; end
+	if msg:match("set (.*) ") then 
+		print(format("set ['%s'] = '%s'",msg:match("set (.*) \".*\""),msg:match("set .* \"(.*)\"")))
+		DBGROPT[msg:match("set (.*) \".*\"")] = msg:match("set .* \"(.*)\"")
+	end
+	if msg:match("setnum (.*) ") then 
+		print(format("setnum ['%s'] = %d",msg:match("setnum (.*) .*"),msg:match("setnum .* ([0-9]+)")))
+		DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)"))
+	end
+
 end
