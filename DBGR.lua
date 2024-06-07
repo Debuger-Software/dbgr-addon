@@ -4,8 +4,6 @@ local ADDON_NAME = "DBGR"
 local ADDON_VERSION = GetAddOnMetadata(ADDON_NAME, "Version")
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
-
-
 local TIME_REQ = false
 
 function AddLootIcons(self, event, msg, ...)
@@ -86,10 +84,10 @@ local function SecondsToTime(time)
 end
 
 local function eventHandler(self, event, ...)
-	if event == "ADDON_LOADED" then
+	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
 		if loadedAddon == ADDON_NAME then
-			if DBGROPT == nil then DBGROPT = {sound=true ,icon_size=24}; end		-- defaulting non existing options
+			if DBGROPT == nil then DBGROPT = {sound=true ,icon_size=24}; end							-- defaulting non existing options
 		end
 	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
@@ -148,14 +146,14 @@ ChatFrame1EditBox:SetAltArrowKeyMode(false);
 
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
-	if msg == "" then	MsgBox:showMsgBox();	end		-- show last message in frame
+	if msg == "" then	MsgBox:showMsgBox();	end														-- show last message in frame
 	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end
-	if msg == "get" then for k, v in pairs(DBGROPT) do print(k, v);	end; end
-	if msg:match("set (.*) ") then 
+	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..v);	end; end					-- show current saved variables
+	if msg:match("set (.*) ") then																		-- set string variable 	"TEXT"
 		print(format("set ['%s'] = '%s'",msg:match("set (.*) \".*\""),msg:match("set .* \"(.*)\"")))
 		DBGROPT[msg:match("set (.*) \".*\"")] = msg:match("set .* \"(.*)\"")
 	end
-	if msg:match("setnum (.*) ") then 
+	if msg:match("setnum (.*) ") then 																	-- set numeric variable	123
 		print(format("setnum ['%s'] = %d",msg:match("setnum (.*) .*"),msg:match("setnum .* ([0-9]+)")))
 		DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)"))
 	end
