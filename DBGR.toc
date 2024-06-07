@@ -9,7 +9,7 @@
 ## X-Curse-Project-ID: 1028809
 ## X-eMail: debuger@debuger.eu
 ## X-Release: BETA
-## Version: 0.4.3
+## Version: 0.4.4
 
 ## SavedVariables: DBGROPT
 
