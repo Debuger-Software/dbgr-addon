@@ -40,7 +40,7 @@ local function create_MsgBox()
 			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
 			MsgBox.header:SetPoint("TOP",0,-7)
 			MsgBox.header:SetTextScale(1.1)
-			MsgBox.header:SetText(string.format("%s        %s %s (%s)        %s",LOGO(16),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE,LOGO(16)))
+			MsgBox.header:SetText(string.format("%1$s        %s %s (%s)        %1$s",LOGO(16):rep(5),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE))
 			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 			MsgBox.text:SetPoint("CENTER",0,0)
 			MsgBox.text:SetTextScale(1.0)
@@ -59,25 +59,26 @@ local function create_MsgBox()
 			MsgBox:SetResizable(true)
 			MsgBox:SetMovable(true)
 			MsgBox:RegisterForDrag("LeftButton")
-			MsgBox:SetScript("OnDragStart", function(self)	self:StartMoving();	end)
-			MsgBox:SetScript("OnDragStop", function(self)	self:StopMovingOrSizing();	end)	
+			MsgBox:SetResizeBounds(300,80,800,500)
+			MsgBox:SetScript("OnDragStart",function(self)	if IsShiftKeyDown() then self:StartSizing() else self:StartMoving(); end	end)
+			MsgBox:SetScript("OnDragStop", function(self)	self:StopMovingOrSizing(); DBGROPT.msgbox_width=self:GetWidth(false); DBGROPT.msgbox_height=self:GetHeight(false);	end)
+			MsgBox:SetScript("OnKeyDown", function (self, key)	 	if self:IsShown() and (key=="ESCAPE" or key=="ENTER") then self:Hide(); end;		end)
 			MsgBox:Hide()
 			MsgBox.showMsgBox = function (self,text,title)
 				if title and title ~= "" then self.header:SetText(tostring(title)) end
 				if text and text ~= "" then self.text:SetText(tostring(text)) end
 				if DBGROPT.sound ~= 0 then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
-				self:SetSize(tonumber(DBGROPT.msgbox_width), tonumber(DBGROPT.msgbox_height))
+				self:SetSize(tonumber(DBGROPT.msgbox_width) or 300, tonumber(DBGROPT.msgbox_height) or 100)
 				self:Show()
 			end
 	return 	MsgBox
 end
 
 local function SecondsToTime(time)
-	-- local days = floor(time/86400)
-	local hours = floor(mod(time, 86400)/3600) + floor(time/86400)
+	local hours = floor(mod(time, 86400)/3600) + floor(time/86400)*24
 	local minutes = floor(mod(time,3600)/60)
 	local seconds = floor(mod(time,60))
-	return format("  %02dh   %02dm   %02ds",days,hours,minutes,seconds)
+	return format("  %02dh   %02dm   %02ds",hours,minutes,seconds)
 end
 
 local function eventHandler(self, event, ...)
@@ -86,7 +87,7 @@ local function eventHandler(self, event, ...)
 		if loadedAddon == ADDON_NAME and DBGROPT == nil then  DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing optionsd
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		local is_init_login, is_reloading_UI = ...
-		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE)) end
+		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE),255,75,0,8,5,500) end
 		if is_reloading_UI then print(format("%s          %s %s (%s)          %s",LOGO(20), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)));	end
 	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
@@ -105,6 +106,7 @@ local function eventHandler(self, event, ...)
 		if TIME_REQ then
 			local timeTotal, timeCurLvl = ...
 			MsgBox:showMsgBox(string.format("Total:  %s\nLevel:  %s",SecondsToTime(timeTotal),SecondsToTime(timeCurLvl)),"Play time statistics")
+			MsgBox.opener = "TIME_PLAYED_MSG"
 			TIME_REQ = false
 		end
 	elseif event == "CHAT_MSG_SYSTEM" then
