@@ -88,7 +88,7 @@ local function eventHandler(self, event, ...)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		local is_init_login, is_reloading_UI = ...
 		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE),255,75,0,8,5,500) end
-		if is_reloading_UI then print(format("%s          %s %s (%s)          %s",LOGO(20), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)));	end
+		if is_reloading_UI then print(format("%1$s%2$s%s %s (%s)%2$s%1$s",LOGO(20),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)));	end
 	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
 		local xpgained = text:match("(%d+)")
@@ -119,8 +119,7 @@ local function eventHandler(self, event, ...)
 				MsgBox:showMsgBox(string.format("AH item sell: %s", extracted), "Auction House")
 			end
 			MsgBox.opener = "AH_SELL"
-		end
-		if text:find("outbid") then
+		elseif text:find("outbid") then
 			local outbid_item = text:match("outbid on (.*).")
 			if MsgBox:IsShown() and MsgBox.opener == "AH_OUTBID" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), outbid_item), "Auction House")
@@ -128,6 +127,9 @@ local function eventHandler(self, event, ...)
 				MsgBox:showMsgBox(string.format("OUTBID: %s", outbid_item), "Auction House")
 			end
 				MsgBox.opener = "AH_OUTBID"
+		elseif text:find("AFK") then
+			MsgBox:showMsgBox("Move or your character has been logout soon!", "! ! !  AFK  WARNING  ! ! !")
+			MsgBox.opener = "AFK_WARNING"
 		end
 	end
 end
