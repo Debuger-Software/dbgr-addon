@@ -110,8 +110,8 @@ local function eventHandler(self, event, ...)
 			TIME_REQ = false
 		end
 	elseif event == "CHAT_MSG_SYSTEM" then
-		local text, _ = ...
-		if text:find("buyer") then
+		local 	text, _ = ...
+		if		text:find("buyer") then
 			local extracted = text:match("auction of (.*).")
 			if MsgBox:IsShown() and MsgBox.opener == "AH_SELL" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), extracted), "Auction House")
@@ -119,7 +119,7 @@ local function eventHandler(self, event, ...)
 				MsgBox:showMsgBox(string.format("AH item sell: %s", extracted), "Auction House")
 			end
 			MsgBox.opener = "AH_SELL"
-		elseif text:find("outbid") then
+		elseif	text:find("outbid") then
 			local outbid_item = text:match("outbid on (.*).")
 			if MsgBox:IsShown() and MsgBox.opener == "AH_OUTBID" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), outbid_item), "Auction House")
@@ -127,7 +127,7 @@ local function eventHandler(self, event, ...)
 				MsgBox:showMsgBox(string.format("OUTBID: %s", outbid_item), "Auction House")
 			end
 				MsgBox.opener = "AH_OUTBID"
-		elseif text:find("AFK") then
+		elseif	text:find("AFK") then
 			MsgBox:showMsgBox("Move or your character has been logout soon!", "! ! !  AFK  WARNING  ! ! !")
 			MsgBox.opener = "AFK_WARNING"
 		end
