@@ -66,6 +66,7 @@ local function create_MsgBox()
 				if title and title ~= "" then self.header:SetText(tostring(title)) end
 				if text and text ~= "" then self.text:SetText(tostring(text)) end
 				if DBGROPT.sound ~= 0 then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
+				self:SetSize(tonumber(DBGROPT.msgbox_width), tonumber(DBGROPT.msgbox_height))
 				self:Show()
 			end
 	return 	MsgBox
@@ -82,9 +83,7 @@ end
 local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
-		if loadedAddon == ADDON_NAME then
-			if DBGROPT == nil then DBGROPT = {sound=true ,icon_size=24}; end												-- defaulting non existing options
-		end
+		if loadedAddon == ADDON_NAME and DBGROPT == nil then  DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing optionsd
 	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
 		local xpgained = text:match("(%d+)")
