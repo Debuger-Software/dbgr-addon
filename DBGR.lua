@@ -73,17 +73,21 @@ local function create_MsgBox()
 end
 
 local function SecondsToTime(time)
-	local days = floor(time/86400)
-	local hours = floor(mod(time, 86400)/3600)
+	-- local days = floor(time/86400)
+	local hours = floor(mod(time, 86400)/3600) + floor(time/86400)
 	local minutes = floor(mod(time,3600)/60)
 	local seconds = floor(mod(time,60))
-	return format("%dd, %02dh  %02dm  %02ds",days,hours,minutes,seconds)
+	return format("  %02dh   %02dm   %02ds",days,hours,minutes,seconds)
 end
 
 local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
 		if loadedAddon == ADDON_NAME and DBGROPT == nil then  DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing optionsd
+	elseif event == "PLAYER_ENTERING_WORLD" then
+		local is_init_login, is_reloading_UI = ...
+		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE)) end
+		if is_reloading_UI then print(format("%s          %s %s (%s)          %s",LOGO(20), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)));	end
 	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
 		local text, _ = ...
 		local xpgained = text:match("(%d+)")
@@ -129,6 +133,7 @@ end
 
 local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("ADDON_LOADED")
+		frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 		frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
 		frame:RegisterEvent("PLAYER_LEVEL_UP")
 		frame:RegisterEvent("CHAT_MSG_SYSTEM")
