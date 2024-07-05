@@ -5,7 +5,6 @@ local ADDON_VERSION = GetAddOnMetadata(ADDON_NAME, "Version")
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 local TIME_REQ = false
--- local DBGROPT
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -165,9 +164,11 @@ end
 --#region 		SettingsFrame UI handlers
 
 function OnShow_SettingsFrame(obj)
+	Title:SetText(format("%1$s%2$s%s %s (%s)%2$s%1$s",LOGO(20),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
-	SetAfkNotify:SetChecked(DBGROPT.afk)
+	SetAfkNotify:SetChecked(DBGROPT.afk);
+	SetXPNotify:SetChecked(DBGROPT.xpinfo);
 end
 function OnClick_SaveReload()
 	SettingsFrame:Hide();
@@ -188,7 +189,6 @@ function OnClick_RestoreDef()
 end
 function OnClick_SetNotifySounds(obj, _)
 	DBGROPT.sound = obj:GetChecked();
-	print(format("checkbox name: %s    state: %s",tostring(obj), tostring(DBGROPT.sound)));
 end
 function OnClick_SetAHNotify(obj, _)
 	DBGROPT.ah = obj:GetChecked();
