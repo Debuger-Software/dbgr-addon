@@ -5,7 +5,7 @@ local ADDON_VERSION = GetAddOnMetadata(ADDON_NAME, "Version")
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 local TIME_REQ = false
-local DBGROPT
+-- local DBGROPT
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -68,7 +68,7 @@ local function create_MsgBox()
 			MsgBox.showMsgBox = function (self,text,title)
 				if title and title ~= "" then self.header:SetText(tostring(title)) end
 				if text and text ~= "" then self.text:SetText(tostring(text)) end
-				if DBGROPT.sound ~= 0 then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
+				if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
 				self:SetSize(tonumber(DBGROPT.msgbox_width) or 300, tonumber(DBGROPT.msgbox_height) or 100)
 				self:Show()
 			end
@@ -85,7 +85,7 @@ end
 local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
-		if loadedAddon == ADDON_NAME and DBGROPT == nil then  DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing optionsd
+		if loadedAddon == ADDON_NAME and DBGROPT == nil then OnClick_RestoreDef(); end -- DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing options
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		local is_init_login, is_reloading_UI = ...
 		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE),255,75,0,8,5,500) end
@@ -112,7 +112,7 @@ local function eventHandler(self, event, ...)
 		end
 	elseif event == "CHAT_MSG_SYSTEM" then
 		local 	text, _ = ...
-		if		text:find("buyer") then
+		if		text:find("buyer") and DBGROPT.ah then
 			local extracted = text:match("auction of (.*).")
 			if MsgBox:IsShown() and MsgBox.opener == "AH_SELL" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), extracted), "Auction House")
@@ -120,7 +120,7 @@ local function eventHandler(self, event, ...)
 				MsgBox:showMsgBox(string.format("AH item sell: %s", extracted), "Auction House")
 			end
 			MsgBox.opener = "AH_SELL"
-		elseif	text:find("outbid") then
+		elseif	text:find("outbid") and DBGROPT.ah then
 			local outbid_item = text:match("outbid on (.*).")
 			if MsgBox:IsShown() and MsgBox.opener == "AH_OUTBID" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), outbid_item), "Auction House")
@@ -128,7 +128,7 @@ local function eventHandler(self, event, ...)
 				MsgBox:showMsgBox(string.format("OUTBID: %s", outbid_item), "Auction House")
 			end
 				MsgBox.opener = "AH_OUTBID"
-		elseif	text:find("AFK") then
+		elseif	text:find("AFK") and DBGROPT.afk then
 			MsgBox:showMsgBox("Move or your character has been logout soon!", "! ! !  AFK  WARNING  ! ! !")
 			MsgBox.opener = "AFK_WARNING"
 		end
@@ -164,12 +164,36 @@ end
 
 function OnClick_SaveReload()
 	SettingsFrame:Hide();
+	ReloadUI();
 end
 
-function OnClick_SetNotifySounds(obj,btn,down)
-	print(format("chekbox name: %s \t\tstate: %s",tostring(obj), tostring(obj:GetChecked())));
+function OnClick_RestoreDef()
+	DBGROPT = {
+				sound=true,
+				ah=true,
+				afk=true,
+				icon_size=24,
+				msgbox_width=300,
+				msgbox_height=100
+			};
+	SettingsFrame:Hide();
+	
+end
+
+function OnClick_SetNotifySounds(obj, _)
+	DBGROPT.sound = obj:GetChecked();
+	print(format("checkbox name: %s    state: %s",tostring(obj), tostring(DBGROPT.sound)));
+end
+
+function OnClick_SetAHNotify(obj, _)
+	DBGROPT.ah = obj:GetChecked();
+end
+function OnClick_SetAfkNotify(obj, _)
+	DBGROPT.afk = obj:GetChecked();
 end
 
 function OnShow_SettingsFrame(obj)
-	SetNotifySounds:SetChecked(DBGROPT.sound)
+	SetNotifySounds:SetChecked(DBGROPT.sound);
+	SetAHNotify:SetChecked(DBGROPT.ah);
+	SetAfkNotify:SetChecked(DBGROPT.afk)
 end

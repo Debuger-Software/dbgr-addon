@@ -1,20 +1,21 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="DBGR.lua" />
 	<FontFamily name="HeaderTitle" />
-	<Frame name="SettingsFrame" inherits="GlowBoxTemplate" parent="UIParent" toplevel="true">
-		<Size x="350" y="500" />
+	<Frame name="SettingsFrame" inherits="UIPanelDialogTemplate" parent="UIParent" toplevel="true" hidden="true">
+		<Size x="350" y="350" />
 		<Anchors>
 			<Anchor point="TOPLEFT">
-				<Offset x="631" y="-78" />
+				<Offset x="631" y="-255" />
 			</Anchor>
 		</Anchors>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="Title" inherits="GameFontRedLarge" text="DBGR ADDON - SETTINGS" outline="NORMAL" maxLines="2">
-					<Size x="350" y="50" />
+				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL" maxLines="2">
+					<Size x="350" y="30" />
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" />
 					</Anchors>
+					<FontHeight val="16" />
 					<Color r="1" />
 					<Shadow>
 						<Offset>
@@ -26,7 +27,67 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="BtnSaveReload" inherits="UIGoldBorderButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
+			<CheckButton name="SetNotifySounds" inherits="ChatConfigCheckButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor x="30" y="-30" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Notification sounds" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						OnClick_SetNotifySounds(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="SetAHNotify" inherits="ChatConfigCheckButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor y="-60" point="BOTTOM" relativeTo="SetNotifySounds" relativePoint="TOP" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Auction House related notifications" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						OnClick_SetAHNotify(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="SetAfkNotify" inherits="ChatConfigCheckButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor y="-60" point="BOTTOM" relativeTo="SetAHNotify" relativePoint="TOP" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="AFK warnings" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						OnClick_SetAfkNotify(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
 				<Size x="115" y="35" />
 				<Anchors>
 					<Anchor x="20" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
@@ -39,45 +100,45 @@
 						OnClick_SaveReload();
 					</OnClick>
 				</Scripts>
-				<NormalColor g="1" />
+				<NormalColor r="1" g="1" />
 			</Button>
-			<CheckButton name="SetNotifySounds" inherits="ChatConfigCheckButtonTemplate" text="">
-				<Size x="25" y="25" />
+			<Button name="BtnRestoreDef" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Restore Defaults">
+				<Size x="115" y="35" />
 				<Anchors>
-					<Anchor x="20" y="-50" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
+					<Anchor x="208" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
 				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Notification sounds" justifyH="LEFT">
-							<Anchors>
-								<Anchor x="10" y="0" point="LEFT" relativePoint="RIGHT" />
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
 				<Scripts>
-					<OnClick>OnClick_SetNotifySounds(self);</OnClick>
-
+					<OnLoad>
+						self:RegisterForClicks("AnyUp","AnyDown")
+					</OnLoad>
+					<OnClick>
+						OnClick_RestoreDef();
+					</OnClick>
 				</Scripts>
-			</CheckButton>
-			<CheckButton name="SetAHNotify" inherits="ChatConfigCheckButtonTemplate" text="">
-				<Size x="25" y="25" />
-				<Anchors>
-					<Anchor x="20" y="-81" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Auction House related notifications" justifyH="LEFT">
-							<Anchors>
-								<Anchor x="10" y="0" point="LEFT" relativePoint="RIGHT" />
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-			</CheckButton>
+				<NormalColor r="1" g="0.753" b="0.753" />
+			</Button>
 		</Frames>
 		<Scripts>
 			<OnShow>OnShow_SettingsFrame(self);</OnShow>
+			<OnDragStart>self:StartMoving();</OnDragStart>
+			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
 		</Scripts>
 	</Frame>
+	<GameTooltip name="$parentTooltip" parentKey="Tooltip" inherits="GameTooltipTemplate">
+		<Anchors>
+			<Anchor y="10" point="TOPLEFT" relativeKey="$parent.Icon" relativePoint="TOPRIGHT" />
+		</Anchors>
+		<KeyValues>
+			<KeyValue key="IsEmbedded" value="true" keyType="string" type="boolean" />
+		</KeyValues>
+		<Scripts>
+			<OnSizeChanged>
+				EmbeddedItemTooltip_UpdateSize(self:GetParent());
+			</OnSizeChanged>
+			<OnTooltipSetItem>
+				local embeddedItemTooltip = self:GetParent();
+				EmbeddedItemTooltip_OnTooltipSetItem(embeddedItemTooltip);
+			</OnTooltipSetItem>
+		</Scripts>
+	</GameTooltip>
 </Ui>
