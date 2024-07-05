@@ -5,6 +5,7 @@ local ADDON_VERSION = GetAddOnMetadata(ADDON_NAME, "Version")
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 local TIME_REQ = false
+local DBGROPT
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -135,6 +136,8 @@ local function eventHandler(self, event, ...)
 end
 -- ===================================================================================================================================================================================================
 
+
+
 local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("ADDON_LOADED")
 		frame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -161,4 +164,12 @@ end
 
 function OnClick_SaveReload()
 	SettingsFrame:Hide();
+end
+
+function OnClick_SetNotifySounds(obj,btn,down)
+	print(format("chekbox name: %s \t\tstate: %s",tostring(obj), tostring(obj:GetChecked())));
+end
+
+function OnShow_SettingsFrame(obj)
+	SetNotifySounds:SetChecked(DBGROPT.sound)
 end

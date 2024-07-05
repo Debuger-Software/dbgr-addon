@@ -26,21 +26,6 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="SetNotifySounds" text="">
-				<Size x="25" y="25" />
-				<Anchors>
-					<Anchor x="20" y="-50" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Notification sounds" justifyH="LEFT">
-							<Anchors>
-								<Anchor x="10" y="5" point="LEFT" relativePoint="RIGHT" />
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-			</CheckButton>
 			<Button name="BtnSaveReload" inherits="UIGoldBorderButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
 				<Size x="115" y="35" />
 				<Anchors>
@@ -56,7 +41,26 @@
 				</Scripts>
 				<NormalColor g="1" />
 			</Button>
-			<CheckButton name="SetAHNotify" text="">
+			<CheckButton name="SetNotifySounds" inherits="ChatConfigCheckButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor x="20" y="-50" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Notification sounds" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" y="0" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>OnClick_SetNotifySounds(self);</OnClick>
+
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="SetAHNotify" inherits="ChatConfigCheckButtonTemplate" text="">
 				<Size x="25" y="25" />
 				<Anchors>
 					<Anchor x="20" y="-81" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
@@ -65,12 +69,15 @@
 					<Layer level="OVERLAY">
 						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Auction House related notifications" justifyH="LEFT">
 							<Anchors>
-								<Anchor x="10" y="5" point="LEFT" relativePoint="RIGHT" />
+								<Anchor x="10" y="0" point="LEFT" relativePoint="RIGHT" />
 							</Anchors>
 						</FontString>
 					</Layer>
 				</Layers>
 			</CheckButton>
 		</Frames>
+		<Scripts>
+			<OnShow>OnShow_SettingsFrame(self);</OnShow>
+		</Scripts>
 	</Frame>
 </Ui>
