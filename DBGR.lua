@@ -143,6 +143,7 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("CHAT_MSG_SYSTEM")
 		frame:RegisterEvent("TIME_PLAYED_MSG")
 		frame:SetScript("OnEvent", eventHandler)
+
 MsgBox = create_MsgBox()
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
@@ -151,8 +152,13 @@ ChatFrame1EditBox:SetAltArrowKeyMode(false);
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
 	if msg == "" then	MsgBox:showMsgBox();	end																			-- show last message in frame
+	if msg == "config" then SettingsFrame:Show();	end
 	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
 	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
 	if msg:match("set (.*) ") then DBGROPT[msg:match("set (.*) \".*\"")] = msg:match("set .* \"(.*)\"") end 				-- set string variable 	"TEXT"
 	if msg:match("setnum (.*) ") then DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)")); end	-- set numeric variable	123
+end
+
+function OnClick_SaveReload()
+	SettingsFrame:Hide();
 end

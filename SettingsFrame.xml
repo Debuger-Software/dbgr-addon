@@ -1,0 +1,65 @@
+<Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="DBGR.lua" />
+	<FontFamily name="HeaderTitle" />
+	<Frame name="SettingsFrame" inherits="GlowBoxTemplate" parent="UIParent" toplevel="true">
+		<Size x="350" y="500" />
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="631" y="-78" />
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="Title" inherits="GameFontRedLarge" text="DBGR ADDON - SETTINGS" outline="NORMAL" maxLines="2">
+					<Size x="350" y="50" />
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" />
+					</Anchors>
+					<Color r="1" />
+					<Shadow>
+						<Offset>
+							<AbsDimension x="1" y="-1" />
+						</Offset>
+						<Color g="1" />
+					</Shadow>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton name="SetNotifySounds" inherits="UICheckButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor x="20" y="-50" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Notification sounds" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" y="5" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<ButtonText font="Fonts\FRIZQT__.TTF">
+					<FontHeight val="12" />
+					<Color r="1" g="1" />
+				</ButtonText>
+			</CheckButton>
+			<Button name="BtnSaveReload" inherits="UIGoldBorderButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
+				<Size x="115" y="35" />
+				<Anchors>
+					<Anchor x="20" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForClicks("AnyUp","AnyDown")
+					</OnLoad>
+					<OnClick>
+						OnClick_SaveReload();
+					</OnClick>
+				</Scripts>
+				<NormalColor g="1" />
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>

@@ -1,17 +1,19 @@
 ## Interface: 40400
-## Author: Debuger
 ## Title: DBGR
+## Author: Debuger
 ## Notes: |cFFFF0000D|r|cFF00FF00B|r|cFF0000FFG|r|cFFFFFF00R|r
-## IconTexture: Interface\AddOns\DBGR\img\d
+## Version: 0.4.5
 ## DefaultState: Enabled
+## eMail: debuger@debuger.eu
+## IconTexture: Interface\AddOns\DBGR\img\d
 ## LoadOnDemand: 0
-## X-License: GPL3
+## SavedVariables: DBGROPT
 ## X-Category: Miscellaneous
 ## X-Curse-Project-ID: 1028809
 ## X-eMail: debuger@debuger.eu
+## X-License: GPL3
 ## X-Release: BETA
-## Version: 0.4.4
 
-## SavedVariables: DBGROPT
 
+SettingsFrame.xml
 DBGR.lua
