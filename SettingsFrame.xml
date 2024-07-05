@@ -26,7 +26,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="SetNotifySounds" inherits="UICheckButtonTemplate" text="">
+			<CheckButton name="SetNotifySounds" text="">
 				<Size x="25" y="25" />
 				<Anchors>
 					<Anchor x="20" y="-50" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
@@ -40,10 +40,6 @@
 						</FontString>
 					</Layer>
 				</Layers>
-				<ButtonText font="Fonts\FRIZQT__.TTF">
-					<FontHeight val="12" />
-					<Color r="1" g="1" />
-				</ButtonText>
 			</CheckButton>
 			<Button name="BtnSaveReload" inherits="UIGoldBorderButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
 				<Size x="115" y="35" />
@@ -60,6 +56,21 @@
 				</Scripts>
 				<NormalColor g="1" />
 			</Button>
+			<CheckButton name="SetAHNotify" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor x="20" y="-81" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Auction House related notifications" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" y="5" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</CheckButton>
 		</Frames>
 	</Frame>
 </Ui>
