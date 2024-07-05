@@ -162,11 +162,17 @@ function SlashCmdList.DBFRAME(msg, editbox)
 	if msg:match("setnum (.*) ") then DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)")); end	-- set numeric variable	123
 end
 
+--#region 		SettingsFrame UI handlers
+
+function OnShow_SettingsFrame(obj)
+	SetNotifySounds:SetChecked(DBGROPT.sound);
+	SetAHNotify:SetChecked(DBGROPT.ah);
+	SetAfkNotify:SetChecked(DBGROPT.afk)
+end
 function OnClick_SaveReload()
 	SettingsFrame:Hide();
 	ReloadUI();
 end
-
 function OnClick_RestoreDef()
 	DBGROPT = {
 				sound=true,
@@ -179,12 +185,10 @@ function OnClick_RestoreDef()
 	SettingsFrame:Hide();
 	
 end
-
 function OnClick_SetNotifySounds(obj, _)
 	DBGROPT.sound = obj:GetChecked();
 	print(format("checkbox name: %s    state: %s",tostring(obj), tostring(DBGROPT.sound)));
 end
-
 function OnClick_SetAHNotify(obj, _)
 	DBGROPT.ah = obj:GetChecked();
 end
@@ -192,8 +196,5 @@ function OnClick_SetAfkNotify(obj, _)
 	DBGROPT.afk = obj:GetChecked();
 end
 
-function OnShow_SettingsFrame(obj)
-	SetNotifySounds:SetChecked(DBGROPT.sound);
-	SetAHNotify:SetChecked(DBGROPT.ah);
-	SetAfkNotify:SetChecked(DBGROPT.afk)
-end
+--#endregion 	SettingsFrame UI handlers
+
