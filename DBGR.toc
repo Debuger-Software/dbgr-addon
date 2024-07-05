@@ -4,7 +4,6 @@
 ## Notes: |cFFFF0000D|r|cFF00FF00B|r|cFF0000FFG|r|cFFFFFF00R|r
 ## Version: 0.5.1
 ## DefaultState: Enabled
-## eMail: debuger@debuger.eu
 ## IconTexture: Interface\AddOns\DBGR\img\d
 ## LoadOnDemand: 0
 ## SavedVariables: DBGROPT
