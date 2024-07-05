@@ -90,7 +90,7 @@ local function eventHandler(self, event, ...)
 		local is_init_login, is_reloading_UI = ...
 		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE),255,75,0,8,5,500) end
 		if is_reloading_UI then print(format("%1$s%2$s%s %s (%s)%2$s%1$s",LOGO(20),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)));	end
-	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
+	elseif event == "CHAT_MSG_COMBAT_XP_GAIN" and DBGROPT.xpinfo then
 		local text, _ = ...
 		local xpgained = text:match("(%d+)")
 		local xp = UnitXP("player")
