@@ -1,17 +1,17 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="DBGR.lua" />
 	<FontFamily name="HeaderTitle" />
-	<Frame name="SettingsFrame" inherits="UIPanelDialogTemplate" parent="UIParent" toplevel="true" hidden="true">
+	<Frame name="SettingsFrame" inherits="GlowBoxTemplate" hidden="true" parent="UIParent" toplevel="true">
 		<Size x="350" y="350" />
 		<Anchors>
-			<Anchor point="TOPLEFT">
-				<Offset x="631" y="-255" />
+			<Anchor point="CENTER">
+				<Offset x="0" y="0" />
 			</Anchor>
 		</Anchors>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL" maxLines="2">
-					<Size x="350" y="30" />
+				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL" maxLines="0">
+					<Size x="350" y="50" />
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" />
 					</Anchors>
@@ -87,6 +87,26 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<CheckButton name="SetXPNotify" inherits="ChatConfigCheckButtonTemplate" text="">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor y="-60" point="BOTTOM" relativeTo="SetAfkNotify" relativePoint="TOP" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Experience related info (on chat)" justifyH="LEFT">
+							<Anchors>
+								<Anchor x="10" point="LEFT" relativePoint="RIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						OnClick_SetXPNotify(self);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
 				<Size x="115" y="35" />
 				<Anchors>
@@ -119,9 +139,15 @@
 			</Button>
 		</Frames>
 		<Scripts>
-			<OnShow>OnShow_SettingsFrame(self);</OnShow>
-			<OnDragStart>self:StartMoving();</OnDragStart>
-			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+			<OnShow>
+				OnShow_SettingsFrame(self);
+			</OnShow>
+			<OnDragStart>
+				self:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+			</OnDragStop>
 		</Scripts>
 	</Frame>
 	<GameTooltip name="$parentTooltip" parentKey="Tooltip" inherits="GameTooltipTemplate">

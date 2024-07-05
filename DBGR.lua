@@ -176,6 +176,7 @@ end
 function OnClick_RestoreDef()
 	DBGROPT = {
 				sound=true,
+				xpinfo=true,
 				ah=true,
 				afk=true,
 				icon_size=24,
@@ -195,6 +196,8 @@ end
 function OnClick_SetAfkNotify(obj, _)
 	DBGROPT.afk = obj:GetChecked();
 end
-
+function OnClick_SetXPNotify(obj, _)
+	DBGROPT.xpinfo = obj:GetChecked();
+end
 --#endregion 	SettingsFrame UI handlers
 
