@@ -162,18 +162,18 @@ function SlashCmdList.DBFRAME(msg, editbox)
 end
 
 --#region 		SettingsFrame UI handlers
-local function OnShow_SettingsFrame(obj)
+function OnShow_SettingsFrame(obj)
 	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(24),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(24)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
 	SetAfkNotify:SetChecked(DBGROPT.afk);
 	SetXPNotify:SetChecked(DBGROPT.xpinfo);
 end
-local function OnClick_SaveReload()
+function OnClick_SaveReload()
 	SettingsFrame:Hide();
 	ReloadUI();
 end
-local function OnClick_RestoreDef()
+function OnClick_RestoreDef()
 	DBGROPT = {
 				sound=true,
 				xpinfo=true,
@@ -184,18 +184,17 @@ local function OnClick_RestoreDef()
 				msgbox_height=100
 			};
 	SettingsFrame:Hide();
-	
 end
-local function OnClick_SetNotifySounds(obj, _)
+function OnClick_SetNotifySounds(obj, _)
 	DBGROPT.sound = obj:GetChecked();
 end
-local function OnClick_SetAHNotify(obj, _)
+function OnClick_SetAHNotify(obj, _)
 	DBGROPT.ah = obj:GetChecked();
 end
-local function OnClick_SetAfkNotify(obj, _)
+function OnClick_SetAfkNotify(obj, _)
 	DBGROPT.afk = obj:GetChecked();
 end
-local function OnClick_SetXPNotify(obj, _)
+function OnClick_SetXPNotify(obj, _)
 	DBGROPT.xpinfo = obj:GetChecked();
 end
 --#endregion 	SettingsFrame UI handlers
