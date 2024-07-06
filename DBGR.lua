@@ -101,7 +101,7 @@ local function eventHandler(self, event, ...)
 	elseif event == "PLAYER_LEVEL_UP" then
 		local talentGroup = GetActiveTalentGroup(false, false)
 		local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
-		if free_talent > 0 then	MsgBox:showMsgBox(string.format("You have free %d unspent talent points!",free_talent)) end
+		if free_talent > 0 then	MsgBox:showMsgBox(string.format("You have free %d unspent talent points!",free_talent)); MsgBox.opener="PLAYER_LEVEL_UP"; end
 	elseif event == "TIME_PLAYED_MSG" then
 		if TIME_REQ then
 			local timeTotal, timeCurLvl = ...
@@ -157,8 +157,6 @@ function SlashCmdList.DBFRAME(msg, editbox)
 	if msg == "config" then SettingsFrame:Show();	end
 	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
 	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
-	if msg:match("set (.*) ") then DBGROPT[msg:match("set (.*) \".*\"")] = msg:match("set .* \"(.*)\"") end 				-- set string variable 	"TEXT"
-	if msg:match("setnum (.*) ") then DBGROPT[msg:match("setnum (.*) .*")] = tonumber(msg:match("setnum .* ([0-9]+)")); end	-- set numeric variable	123
 end
 
 --#region 		SettingsFrame UI handlers
