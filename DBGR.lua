@@ -164,7 +164,7 @@ end
 --#region 		SettingsFrame UI handlers
 
 function OnShow_SettingsFrame(obj)
-	Title:SetText(format("%1$s%2$s%s %s (%s)%2$s%1$s",LOGO(20),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(20)))
+	Title:SetText(format("%1$s%2$s%s %s (%s)%2$s%1$s - SETTINGS",LOGO(24),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(24)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
 	SetAfkNotify:SetChecked(DBGROPT.afk);
