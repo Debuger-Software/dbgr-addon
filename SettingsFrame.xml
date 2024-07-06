@@ -169,7 +169,7 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
-	<Frame name="MsgFrame" inherits="BackdropTemplate" hidden="" parent="UIParent">
+	<Frame name="MsgFrame" inherits="BackdropTemplate" hidden="true" parent="UIParent">
 		<Size x="544" y="192" />
 		<Anchors>
 			<Anchor x="272" y="-496" point="TOPLEFT" />
@@ -190,7 +190,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="$parentTitle" inherits="" font="Fonts\MORPHEUS.TTF" bytes="0" text="Message Title" outline="NORMAL">
+				<FontString name="$parentTitle" inherits="" font="Fonts\MORPHEUS.TTF" bytes="0" text="Title" outline="NORMAL">
 					<Size x="520" y="30" />
 					<Anchors>
 						<Anchor x="8" y="-15" point="TOPLEFT" relativeTo="MsgFrame" relativePoint="TOPLEFT" />
