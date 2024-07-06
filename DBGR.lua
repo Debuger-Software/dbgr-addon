@@ -135,8 +135,6 @@ local function eventHandler(self, event, ...)
 end
 -- ===================================================================================================================================================================================================
 
-
-
 local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("ADDON_LOADED")
 		frame:RegisterEvent("PLAYER_ENTERING_WORLD")
