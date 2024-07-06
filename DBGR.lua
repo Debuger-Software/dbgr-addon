@@ -39,11 +39,11 @@ local function create_MsgBox()
 			MsgBox.opener = nil
 			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
 			MsgBox.header:SetPoint("TOP",0,-7)
-			MsgBox.header:SetTextScale(1.1)
+			MsgBox.header:SetTextScale(1.2)
 			MsgBox.header:SetText(string.format("%1$s        %s %s (%s)        %1$s",LOGO(16):rep(5),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE))
 			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 			MsgBox.text:SetPoint("CENTER",0,0)
-			MsgBox.text:SetTextScale(1.0)
+			MsgBox.text:SetTextScale(1.1)
 			MsgBox.text:SetText("")
 			MsgBox.btn = CreateFrame("Button","DBGR_msgbox_btn",MsgBox,"UIPanelButtonTemplate");
 			MsgBox.btn:RegisterForClicks("AnyUp");
@@ -161,7 +161,7 @@ end
 
 --#region 		SettingsFrame UI handlers
 function OnShow_SettingsFrame(obj)
-	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(24),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(24)))
+	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(30),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(30)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
 	SetAfkNotify:SetChecked(DBGROPT.afk);

@@ -2,7 +2,7 @@
 ## Title: DBGR
 ## Author: Debuger
 ## Notes: |cFFFF0000D|r|cFF00FF00B|r|cFF0000FFG|r|cFFFFFF00R|r
-## Version: 0.5.1
+## Version: 0.5.2
 ## DefaultState: Enabled
 ## IconTexture: Interface\AddOns\DBGR\img\d
 ## LoadOnDemand: 0
