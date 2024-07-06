@@ -154,7 +154,10 @@
 			</Button>
 		</Frames>
 		<Scripts>
-  			<OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
+  			<OnLoad>
+				self:SetMovable(true);
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
 			<OnShow>
 				OnShow_SettingsFrame(self);
 			</OnShow>
