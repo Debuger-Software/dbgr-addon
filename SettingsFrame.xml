@@ -108,7 +108,7 @@
 				</Scripts>
 			</CheckButton>
 			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp;&amp; Reload">
-				<Size x="115" y="35" />
+				<Size x="115" y="30" />
 				<Anchors>
 					<Anchor x="20" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
 				</Anchors>
@@ -123,9 +123,9 @@
 				<NormalColor r="1" g="1" />
 			</Button>
 			<Button name="BtnRestoreDef" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Restore Defaults">
-				<Size x="115" y="35" />
+				<Size x="115" y="30" />
 				<Anchors>
-					<Anchor x="208" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
+					<Anchor x="218" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
 				</Anchors>
 				<Scripts>
 					<OnLoad>
@@ -137,8 +137,24 @@
 				</Scripts>
 				<NormalColor r="1" g="0.753" b="0.753" />
 			</Button>
+			<Button name="BtnCloseSettings" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Close">
+				<Size x="50" y="30" />
+				<Anchors>
+					<Anchor x="150" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForClicks("AnyUp","AnyDown")
+					</OnLoad>
+					<OnClick>
+						SettingsFrame:Hide();
+					</OnClick>
+				</Scripts>
+				<NormalColor r="1" g="0.753" b="0.753" />
+			</Button>
 		</Frames>
 		<Scripts>
+  			<OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
 			<OnShow>
 				OnShow_SettingsFrame(self);
 			</OnShow>
@@ -150,21 +166,4 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
-	<GameTooltip name="$parentTooltip" parentKey="Tooltip" inherits="GameTooltipTemplate">
-		<Anchors>
-			<Anchor y="10" point="TOPLEFT" relativeKey="$parent.Icon" relativePoint="TOPRIGHT" />
-		</Anchors>
-		<KeyValues>
-			<KeyValue key="IsEmbedded" value="true" keyType="string" type="boolean" />
-		</KeyValues>
-		<Scripts>
-			<OnSizeChanged>
-				EmbeddedItemTooltip_UpdateSize(self:GetParent());
-			</OnSizeChanged>
-			<OnTooltipSetItem>
-				local embeddedItemTooltip = self:GetParent();
-				EmbeddedItemTooltip_OnTooltipSetItem(embeddedItemTooltip);
-			</OnTooltipSetItem>
-		</Scripts>
-	</GameTooltip>
 </Ui>
