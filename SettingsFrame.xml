@@ -5,12 +5,12 @@
 		<Size x="350" y="350" />
 		<Anchors>
 			<Anchor point="CENTER">
-				<Offset x="0" y="0" />
+				<Offset x="-17" y="173" />
 			</Anchor>
 		</Anchors>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL" maxLines="0">
+				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL">
 					<Size x="350" y="50" />
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" />
@@ -154,13 +154,87 @@
 			</Button>
 		</Frames>
 		<Scripts>
-  			<OnLoad>
+			<OnLoad>
 				self:SetMovable(true);
 				self:RegisterForDrag("LeftButton");
 			</OnLoad>
 			<OnShow>
 				OnShow_SettingsFrame(self);
 			</OnShow>
+			<OnDragStart>
+				self:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				self:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	<Frame name="MsgFrame" inherits="BackdropTemplate" hidden="" parent="UIParent">
+		<Size x="544" y="192" />
+		<Anchors>
+			<Anchor x="272" y="-496" point="TOPLEFT" />
+		</Anchors>
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" keyType="string" type="global" />
+		</KeyValues>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Gold-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Gold-Border" tile="true">
+			<BorderColor r="0.706" g="0.706" b="0.706" />
+		</Backdrop>
+		<Layers>
+			<Layer>
+				<Texture file="Interface\AddOns\DBGR\img\d.tga">
+					<Size x="64" y="64" />
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="MsgFrame" relativePoint="TOPLEFT" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="$parentTitle" inherits="" font="Fonts\MORPHEUS.TTF" bytes="0" text="Message Title" outline="NORMAL">
+					<Size x="520" y="30" />
+					<Anchors>
+						<Anchor x="8" y="-15" point="TOPLEFT" relativeTo="MsgFrame" relativePoint="TOPLEFT" />
+					</Anchors>
+					<FontHeight val="20" />
+					<Color r="1" g="1" />
+					<Shadow>
+						<Color r="1" />
+					</Shadow>
+				</FontString>
+				<FontString inherits="GameFontNormalMed1" text="FontString1">
+					<Size x="512" y="96" />
+					<Anchors>
+						<Anchor x="16" y="-48" point="TOPLEFT" />
+					</Anchors>
+					<FontHeight val="20" />
+					<Color r="1" g="1" b="1" />
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentBtnOK" inherits="UIGoldBorderButtonTemplate" text="OK">
+				<Size x="88" y="24" />
+				<Anchors>
+					<Anchor y="15" point="BOTTOM" relativeTo="MsgFrame" relativePoint="BOTTOM" />
+				</Anchors>
+				<HighlightTexture file="Interface\BUTTONS\UI-Listbox-Highlight" alphaMode="ADD">
+					<TexCoords left="0" right="1" top="0.03" bottom="0.7175" />
+				</HighlightTexture>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForClicks("AnyUp")
+					</OnLoad>
+					<OnClick>
+						MsgFrame:Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:SetMovable(true);
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
 			<OnDragStart>
 				self:StartMoving();
 			</OnDragStart>
