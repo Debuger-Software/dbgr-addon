@@ -1,7 +1,7 @@
 ---@diagnostic disable: inject-field, deprecated, undefined-global, param-type-mismatch
 
 local ADDON_NAME = "DBGR"
-local ADDON_VERSION = GetAddOnMetadata(ADDON_NAME, "Version")
+local ADDON_VERSION = format("%s rev.%s",GetAddOnMetadata(ADDON_NAME, "Version"),GetAddOnMetadata(ADDON_NAME, "X-Revision"))
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 local TIME_REQ = false
@@ -81,6 +81,52 @@ local function SecondsToTime(time)
 	return format("  %02dh   %02dm   %02ds",hours,minutes,seconds)
 end
 
+local function displayMailsInfo(self)
+	local curSoundSet = DBGROPT.sound;
+	local numItems, totalItems = GetInboxNumItems();
+	local numAttach, totalGold = CountItemsAndMoney(self);
+	local pozostalo, turatxt, itemy, gold = " "," "," "," ";
+	if numAttach ~= 0 then itemy   = "Ilosc itemow w mailach: |cFF33FF33"..numAttach.."|r\n\n" end
+	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(forsaTranslate(totalGold)).."|r\n\n" end
+	if totalItems > 0 then
+		MsgBox:Show();
+		local tury = ceil(totalItems / 50);
+		if tury < 5 then
+			pozostalo = "Pozostaly";
+			tura = "tury";
+		elseif tury > 4 then
+			pozostalo = "Pozostalo";
+			tura = "tur";
+		end
+		if tury ~= 1 then turatxt = pozostalo.." |cFF33FF33"..tostring(tury).."|r "..tura.." otwierania.\n\n" end
+		DBGROPT.sound=false;
+		MsgBox:showMsgBox("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n\n" .. itemy .. gold .. turatxt, "Mailbox stats");
+		DBGROPT.sound=curSoundSet;
+	else
+		print("|cFFFF99FFSkrzynka pusta :(|r");
+	end
+	MsgBox.opener="MAIL"
+end
+
+function CountItemsAndMoney(self)
+	local numAttach = 0;
+	local numGold = 0;
+	local msgSubject;
+	local spam = 0;
+	self:UnregisterEvent("MAIL_INBOX_UPDATE");
+	for i = 1, GetInboxNumItems() do
+			local msgSubject, msgMoney, _, _, msgItem = select(4, GetInboxHeaderInfo(i))
+			numAttach = numAttach + (msgItem or 0);
+			numGold = numGold + msgMoney;
+	end
+	self:RegisterEvent("MAIL_INBOX_UPDATE");
+	return numAttach, numGold
+end
+
+function forsaTranslate(money)
+	return GetMoneyString(math.abs(money));
+end
+
 local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
@@ -131,6 +177,8 @@ local function eventHandler(self, event, ...)
 			MsgBox:showMsgBox("Move or your character has been logout soon!", "! ! !  AFK  WARNING  ! ! !")
 			MsgBox.opener = "AFK_WARNING"
 		end
+	elseif event == "MAIL_INBOX_UPDATE" then
+		displayMailsInfo(self);
 	end
 end
 -- ===================================================================================================================================================================================================
@@ -142,6 +190,7 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("PLAYER_LEVEL_UP")
 		frame:RegisterEvent("CHAT_MSG_SYSTEM")
 		frame:RegisterEvent("TIME_PLAYED_MSG")
+		frame:RegisterEvent("MAIL_INBOX_UPDATE")
 		frame:SetScript("OnEvent", eventHandler)
 
 MsgBox = create_MsgBox()
@@ -159,7 +208,7 @@ end
 
 --#region 		SettingsFrame UI handlers
 function OnShow_SettingsFrame(obj)
-	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(30),(" "):rep(10), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(30)))
+	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(30),(" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(30)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
 	SetAfkNotify:SetChecked(DBGROPT.afk);
