@@ -1,5 +1,4 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
-	<!-- <Script file="DBGR.lua" /> -->
 	<Frame name="MainFrame" parent="UIParent" toplevel="true" hidden="true">
 		<Size x="500" y="200" />
 		<Anchors><Anchor x="-9" y="20" point="CENTER" /></Anchors>

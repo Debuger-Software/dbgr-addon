@@ -1,28 +1,16 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
-	<!-- <Script file="DBGR.lua" /> -->
 	<FontFamily name="HeaderTitle" />
 	<Frame name="SettingsFrame" inherits="GlowBoxTemplate" hidden="true" parent="UIParent" toplevel="true">
 		<Size x="350" y="350" />
-		<Anchors>
-			<Anchor point="CENTER">
-				<Offset x="-17" y="173" />
-			</Anchor>
-		</Anchors>
+		<Anchors><Anchor point="CENTER"><Offset x="-17" y="173" /></Anchor></Anchors>
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL">
 					<Size x="350" y="50" />
-					<Anchors>
-						<Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" />
-					</Anchors>
+					<Anchors><Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" /></Anchors>
 					<FontHeight val="16" />
 					<Color r="1" />
-					<Shadow>
-						<Offset>
-							<AbsDimension x="1" y="-1" />
-						</Offset>
-						<Color g="1" />
-					</Shadow>
+					<Shadow><Offset><AbsDimension x="1" y="-1" /></Offset><Color g="1" /></Shadow>
 				</FontString>
 			</Layer>
 		</Layers>
@@ -158,15 +146,9 @@
 				self:SetMovable(true);
 				self:RegisterForDrag("LeftButton");
 			</OnLoad>
-			<OnShow>
-				OnShow_SettingsFrame(self);
-			</OnShow>
-			<OnDragStart>
-				self:StartMoving();
-			</OnDragStart>
-			<OnDragStop>
-				self:StopMovingOrSizing();
-			</OnDragStop>
+			<OnShow>OnShow_SettingsFrame(self);</OnShow>
+			<OnDragStart>self:StartMoving();</OnDragStart>
+			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
 		</Scripts>
 	</Frame>
 </Ui>
