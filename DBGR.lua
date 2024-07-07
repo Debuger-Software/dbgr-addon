@@ -31,49 +31,6 @@ local function showAlertOnScreen(text,r,g,b,t,f,top)
 			msg:AddMessage(text, r, g, b)
 end
 
-local function create_MsgBox()
-	local	MsgBox = CreateFrame("Frame","DBGR_msgbox",UIParent, "GlowBoxTemplate")
-			MsgBox:SetFrameStrata("BACKGROUND")
-			MsgBox:SetSize(300, 100)
-			MsgBox:SetPoint("CENTER",0,0)
-			MsgBox.opener = nil
-			MsgBox.header = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontRedSmall")
-			MsgBox.header:SetPoint("TOP",0,-7)
-			MsgBox.header:SetTextScale(1.2)
-			MsgBox.header:SetText(string.format("%1$s        %s %s (%s)        %1$s",LOGO(16):rep(5),ADDON_NAME,ADDON_VERSION,ADDON_REL_TYPE))
-			MsgBox.text = MsgBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-			MsgBox.text:SetPoint("CENTER",0,0)
-			MsgBox.text:SetTextScale(1.1)
-			MsgBox.text:SetText("")
-			MsgBox.btn = CreateFrame("Button","DBGR_msgbox_btn",MsgBox,"UIPanelButtonTemplate");
-			MsgBox.btn:RegisterForClicks("AnyUp");
-			MsgBox.btn:SetSize(50,20);
-			MsgBox.btn:SetPoint("BOTTOM",0,6)
-			MsgBox.btn:SetNormalFontObject("GameFontNormalSmall");
-			MsgBox.btn:SetHighlightFontObject("GameFontHighlightSmall");
-			MsgBox.btn:SetDisabledFontObject("GameFontDisableSmall");
-			MsgBox.btn:SetText("OK");
-			MsgBox.btn:SetScript("OnClick", function() MsgBox:Hide(); MsgBox.opener = nil; end )
-			MsgBox.btn:Show()
-			MsgBox:EnableMouse(true)
-			MsgBox:SetResizable(true)
-			MsgBox:SetMovable(true)
-			MsgBox:RegisterForDrag("LeftButton")
-			MsgBox:SetResizeBounds(300,80,800,500)
-			MsgBox:SetScript("OnDragStart",function(self)	if IsShiftKeyDown() then self:StartSizing() else self:StartMoving(); end	end)
-			MsgBox:SetScript("OnDragStop", function(self)	self:StopMovingOrSizing(); DBGROPT.msgbox_width=self:GetWidth(false); DBGROPT.msgbox_height=self:GetHeight(false);	end)
-			MsgBox:SetScript("OnKeyDown", function (self, key)	 	if self:IsShown() and (key=="ESCAPE" or key=="ENTER") then self:Hide(); end;		end)
-			MsgBox:Hide()
-			MsgBox.showMsgBox = function (self,text,title)
-				if title and title ~= "" then self.header:SetText(tostring(title)) end
-				if text and text ~= "" then self.text:SetText(tostring(text)) end
-				if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
-				self:SetSize(tonumber(DBGROPT.msgbox_width) or 300, tonumber(DBGROPT.msgbox_height) or 100)
-				self:Show()
-			end
-	return 	MsgBox
-end
-
 local function SecondsToTime(time)
 	local hours = floor(mod(time, 86400)/3600) + floor(time/86400)*24
 	local minutes = floor(mod(time,3600)/60)
@@ -102,7 +59,7 @@ local function displayMailsInfo(self)
 	else
 		print("|cFFFF99FFSkrzynka pusta :(|r");
 	end
-	--MsgBox.opener="MAIL"
+	MsgBox.opener="MAIL"
 end
 
 function CountItemsAndMoney(self)
@@ -190,7 +147,16 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("MAIL_INBOX_UPDATE")
 		frame:SetScript("OnEvent", eventHandler)
 
-MsgBox = create_MsgBox()
+MsgBox = MailInfoFrame
+MsgBox.header = MailInfoFrame_Title
+MsgBox.text = MailInfoFrame_Text
+MsgBox.showMsgBox = function (self,text,title)
+	if title and title ~= "" then self.header:SetText(tostring(title)) end
+	if text and text ~= "" then self.text:SetText(tostring(text)) end
+	if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
+	-- self:SetSize(tonumber(DBGROPT.msgbox_width) or 300, tonumber(DBGROPT.msgbox_height) or 100)
+	self:Show()
+end
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
 ChatFrame1EditBox:SetAltArrowKeyMode(false);
@@ -221,9 +187,7 @@ function OnClick_RestoreDef()
 				xpinfo=true,
 				ah=true,
 				afk=true,
-				icon_size=24,
-				msgbox_width=300,
-				msgbox_height=100
+				icon_size=24
 			};
 	SettingsFrame:Hide();
 end

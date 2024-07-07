@@ -37,9 +37,10 @@
 			<OnLoad>
 				self:SetMovable(true);
 				self:RegisterForDrag("LeftButton");
-				self:SetScale(0.8);
+				self:SetScale(0.7);
 			</OnLoad>
-			<OnDragStart>self:StartMoving();</OnDragStart>	<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+			<OnDragStart>self:StartMoving();</OnDragStart>
+			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
 		</Scripts>
 	</Frame>
 </Ui>
