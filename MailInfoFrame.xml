@@ -1,32 +1,38 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="DBGR.lua" />
-	<Frame name="MailInfoFrame" inherits="" parent="UIParent">
+	<Frame name="MailInfoFrame" parent="UIParent" toplevel="true" hidden="true">
 		<Size x="500" y="200" />
 		<Anchors>
 			<Anchor x="-9" y="20" point="CENTER" />
 		</Anchors>
-		<Backdrop bgFile="Interface\AddOns\DBGR\img\darkrainbowbottombg.tga" edgeFile="Interface\DialogFrame\UI-DialogBox-Border">
+		<Backdrop bgFile="Interface\AddOns\DBGR\img\darkflamebg" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
 			<BackgroundInsets left="10" right="10" top="10" bottom="10" />
 		</Backdrop>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="$parent_Title" inherits="" font="Fonts\MORPHEUS.TTF" text="MailBox   Statistics" spacing="2" outline="NORMAL">
-					<Size x="460" y="35" />
+				<Texture file="Interface\AddOns\DBGR\img\darkflamebg" name="$parent_bg">
+					<Size x="500" y="200" />
 					<Anchors>
-						<Anchor x="20" y="-20" point="TOPLEFT" relativeTo="MailInfoFrame" relativePoint="TOPLEFT" />
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Title" inherits="" font="Fonts\MORPHEUS.TTF" text="MailBox   Statistics" spacing="2" outline="NORMAL">
+					<Size x="500" y="30" />
+					<Anchors>
+						<Anchor x="0" y="-10" point="TOP" relativePoint="TOP" relativeTo="MailInfoFrame" />
 					</Anchors>
 					<FontHeight val="24" />
-					<Color g="1" />
+					<Color g="0.7" r="1" />
 					<Shadow>
 						<Color r="0.502" g="1" b="0.502" />
 					</Shadow>
 				</FontString>
 				<FontString name="$parent_Text" inherits="" font="Fonts\FRIZQT__.TTF" text="stats|nstats" spacing="1" outline="THICK" maxLines="5">
-					<Size x="460" y="80" />
+					<Size x="500" y="130" />
 					<Anchors>
-						<Anchor x="20" y="-60" point="TOPLEFT" />
+						<Anchor x="0" y="0" point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Title" />
 					</Anchors>
-					<FontHeight val="18" />
+					<FontHeight val="17" />
 					<Color r="1" g="1" b="1" />
 				</FontString>
 			</Layer>
@@ -35,11 +41,11 @@
 			<Button name="$parent_BtnOK" inherits="MagicButtonTemplate" text="OK">
 				<Size x="50" y="30" />
 				<Anchors>
-					<Anchor y="20" point="BOTTOM" relativeTo="MailInfoFrame" relativePoint="BOTTOM" />
+					<Anchor y="5" point="BOTTOM" relativeTo="MailInfoFrame" relativePoint="BOTTOM" />
 				</Anchors>
 				<Scripts>
 					<OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>
-					<OnClick>$parent:Hide();</OnClick>
+					<OnClick>MailInfoFrame:Hide();</OnClick>
 				</Scripts>
 			</Button>
 		</Frames>
@@ -47,10 +53,8 @@
 			<OnLoad>
 				self:SetMovable(true);
 				self:RegisterForDrag("LeftButton");
+				self:SetScale(0.8);
 			</OnLoad>
-			<OnShow>
-				OnShow_SettingsFrame(self);
-			</OnShow>
 			<OnDragStart>
 				self:StartMoving();
 			</OnDragStart>

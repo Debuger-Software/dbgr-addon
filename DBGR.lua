@@ -86,10 +86,10 @@ local function displayMailsInfo(self)
 	local numItems, totalItems = GetInboxNumItems();
 	local numAttach, totalGold = CountItemsAndMoney(self);
 	local pozostalo, turatxt, itemy, gold = " "," "," "," ";
-	if numAttach ~= 0 then itemy   = "Ilosc itemow w mailach: |cFF33FF33"..numAttach.."|r\n\n" end
-	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(forsaTranslate(totalGold)).."|r\n\n" end
+	if numAttach ~= 0 then itemy   = "Ilosc itemow w mailach: |cFF33FF33"..numAttach.."|r\n" end
+	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(forsaTranslate(totalGold)).."|r" end
 	if totalItems > 0 then
-		MsgBox:Show();
+		MailInfoFrame:Show();
 		local tury = ceil(totalItems / 50);
 		if tury < 5 then
 			pozostalo = "Pozostaly";
@@ -98,14 +98,15 @@ local function displayMailsInfo(self)
 			pozostalo = "Pozostalo";
 			tura = "tur";
 		end
-		if tury ~= 1 then turatxt = pozostalo.." |cFF33FF33"..tostring(tury).."|r "..tura.." otwierania.\n\n" end
-		DBGROPT.sound=false;
-		MsgBox:showMsgBox("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n\n" .. itemy .. gold .. turatxt, "Mailbox stats");
-		DBGROPT.sound=curSoundSet;
+		if tury ~= 1 then turatxt = "\n"..pozostalo.." |cFF33FF33"..tostring(tury).."|r "..tura.." otwierania." end
+		--DBGROPT.sound=false;
+		--MsgBox:showMsgBox("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n\n" .. itemy .. gold .. turatxt, "Mailbox stats");
+		--DBGROPT.sound=curSoundSet;
+		MailInfoFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold .. turatxt);
 	else
 		print("|cFFFF99FFSkrzynka pusta :(|r");
 	end
-	MsgBox.opener="MAIL"
+	--MsgBox.opener="MAIL"
 end
 
 function CountItemsAndMoney(self)
