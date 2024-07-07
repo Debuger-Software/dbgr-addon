@@ -45,7 +45,7 @@ local function displayMailsInfo(self)
 	if numAttach ~= 0 then itemy   = "Ilosc itemow w mailach: |cFF33FF33"..numAttach.."|r\n" end
 	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(forsaTranslate(totalGold)).."|r" end
 	if totalItems > 0 then
-		MailInfoFrame:Show();
+		MainFrame:Show();
 		local tury = ceil(totalItems / 50);
 		if tury < 5 then
 			pozostalo = "Pozostaly";
@@ -55,7 +55,7 @@ local function displayMailsInfo(self)
 			tura = "tur";
 		end
 		if tury ~= 1 then turatxt = "\n"..pozostalo.." |cFF33FF33"..tostring(tury).."|r "..tura.." otwierania." end
-		MailInfoFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold .. turatxt);
+		MainFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold .. turatxt);
 	else
 		print("|cFFFF99FFSkrzynka pusta :(|r");
 	end
@@ -147,9 +147,9 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("MAIL_INBOX_UPDATE")
 		frame:SetScript("OnEvent", eventHandler)
 
-MsgBox = MailInfoFrame
-MsgBox.header = MailInfoFrame_Title
-MsgBox.text = MailInfoFrame_Text
+MsgBox = MainFrame
+MsgBox.header = MainFrame_Title
+MsgBox.text = MainFrame_Text
 MsgBox.showMsgBox = function (self,text,title)
 	if title and title ~= "" then self.header:SetText(tostring(title)) end
 	if text and text ~= "" then self.text:SetText(tostring(text)) end

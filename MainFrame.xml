@@ -1,6 +1,6 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
 	<!-- <Script file="DBGR.lua" /> -->
-	<Frame name="MailInfoFrame" parent="UIParent" toplevel="true" hidden="true">
+	<Frame name="MainFrame" parent="UIParent" toplevel="true" hidden="true">
 		<Size x="500" y="200" />
 		<Anchors><Anchor x="-9" y="20" point="CENTER" /></Anchors>
 		<Layers>
@@ -11,7 +11,7 @@
 				</Texture>
 				<FontString name="$parent_Title" inherits="" font="Fonts\MORPHEUS.TTF" text="MailBox   Statistics" spacing="2" outline="NORMAL">
 					<Size x="500" y="30" />
-					<Anchors><Anchor x="0" y="-10" point="TOP" relativePoint="TOP" relativeTo="MailInfoFrame" /></Anchors>
+					<Anchors><Anchor x="0" y="-10" point="TOP" relativePoint="TOP" relativeTo="MainFrame" /></Anchors>
 					<FontHeight val="24" />
 					<Color g="0.7" r="1" />
 					<Shadow><Color r="0.502" g="1" b="0.502" /></Shadow>
@@ -27,9 +27,9 @@
 		<Frames>
 			<Button name="$parent_BtnOK" inherits="MagicButtonTemplate" text="OK">
 				<Size x="50" y="30" />
-				<Anchors><Anchor y="5" point="BOTTOM" relativeTo="MailInfoFrame" relativePoint="BOTTOM" /></Anchors>
+				<Anchors><Anchor y="5" point="BOTTOM" relativeTo="MainFrame" relativePoint="BOTTOM" /></Anchors>
 				<Scripts>
-					<OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>  <OnClick>MailInfoFrame:Hide();</OnClick>
+					<OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>  <OnClick>MainFrame:Hide();</OnClick>
 				</Scripts>
 			</Button>
 		</Frames>
