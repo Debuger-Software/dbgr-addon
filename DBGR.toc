@@ -9,11 +9,11 @@
 ## SavedVariables: DBGROPT
 ## X-Category: Miscellaneous
 ## X-Curse-Project-ID: 1028809
-## X-Date: 07-07-2024 12:20:00
+## X-Date: 07-07-2024 12:39:09
 ## X-eMail: debuger@debuger.eu
 ## X-License: GPL3
 ## X-Release: BETA
-## X-Revision: 89
+## X-Revision: 90
 
 SettingsFrame.xml
 MailInfoFrame.xml
