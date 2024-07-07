@@ -80,7 +80,7 @@ local function SecondsToTime(time)
 	local seconds = floor(mod(time,60))
 	return format("  %02dh   %02dm   %02ds",hours,minutes,seconds)
 end
-
+ 
 local function displayMailsInfo(self)
 	local curSoundSet = DBGROPT.sound;
 	local numItems, totalItems = GetInboxNumItems();
