@@ -82,7 +82,6 @@ local function SecondsToTime(time)
 end
 
 local function displayMailsInfo(self)
-	local curSoundSet = DBGROPT.sound;
 	local numItems, totalItems = GetInboxNumItems();
 	local numAttach, totalGold = CountItemsAndMoney(self);
 	local pozostalo, turatxt, itemy, gold = " "," "," "," ";
@@ -99,9 +98,6 @@ local function displayMailsInfo(self)
 			tura = "tur";
 		end
 		if tury ~= 1 then turatxt = "\n"..pozostalo.." |cFF33FF33"..tostring(tury).."|r "..tura.." otwierania." end
-		--DBGROPT.sound=false;
-		--MsgBox:showMsgBox("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n\n" .. itemy .. gold .. turatxt, "Mailbox stats");
-		--DBGROPT.sound=curSoundSet;
 		MailInfoFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold .. turatxt);
 	else
 		print("|cFFFF99FFSkrzynka pusta :(|r");

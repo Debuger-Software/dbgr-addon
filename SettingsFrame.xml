@@ -1,5 +1,5 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="DBGR.lua" />
+	<!-- <Script file="DBGR.lua" /> -->
 	<FontFamily name="HeaderTitle" />
 	<Frame name="SettingsFrame" inherits="GlowBoxTemplate" hidden="true" parent="UIParent" toplevel="true">
 		<Size x="350" y="350" />
