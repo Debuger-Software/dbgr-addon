@@ -1,13 +1,12 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
-	<FontFamily name="HeaderTitle" />
-	<Frame name="SettingsFrame" inherits="GlowBoxTemplate" hidden="true" parent="UIParent" toplevel="true">
-		<Size x="350" y="350" />
-		<Anchors><Anchor point="CENTER"><Offset x="-17" y="173" /></Anchor></Anchors>
+	<Frame name="SettingsFrame" hidden="true" parent="UIParent" toplevel="true">
+		<!-- <Size x="350" y="350" /> -->
+		<!-- <Anchors><Anchor point="CENTER"><Offset x="-17" y="173" /></Anchor></Anchors> -->
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name="Title" inherits="GameFontRed" text="DBGR ADDON - SETTINGS" outline="NORMAL">
 					<Size x="350" y="50" />
-					<Anchors><Anchor point="TOPLEFT" relativeTo="SettingsFrame" relativePoint="TOPLEFT" /></Anchors>
+					<Anchors><Anchor point="TOP" relativeTo="SettingsFrame" relativePoint="TOP" /></Anchors>
 					<FontHeight val="16" />
 					<Color r="1" />
 					<Shadow><Offset><AbsDimension x="1" y="-1" /></Offset><Color g="1" /></Shadow>
@@ -125,7 +124,7 @@
 				</Scripts>
 				<NormalColor r="1" g="0.753" b="0.753" />
 			</Button>
-			<Button name="BtnCloseSettings" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Close">
+			<!-- <Button name="BtnCloseSettings" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Close">
 				<Size x="50" y="30" />
 				<Anchors>
 					<Anchor x="150" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" />
@@ -139,16 +138,19 @@
 					</OnClick>
 				</Scripts>
 				<NormalColor r="1" g="0.753" b="0.753" />
-			</Button>
+			</Button> -->
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				self:SetMovable(true);
-				self:RegisterForDrag("LeftButton");
+				<!-- self:SetMovable(true);
+				self:RegisterForDrag("LeftButton"); -->
+				self.name = "DBGR";
+				InterfaceOptions_AddCategory(self,true,1);
+				InterfaceAddOnsList_Update();
 			</OnLoad>
 			<OnShow>OnShow_SettingsFrame(self);</OnShow>
-			<OnDragStart>self:StartMoving();</OnDragStart>
-			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+			<!-- <OnDragStart>self:StartMoving();</OnDragStart>
+			<OnDragStop>self:StopMovingOrSizing();</OnDragStop> -->
 		</Scripts>
 	</Frame>
 </Ui>

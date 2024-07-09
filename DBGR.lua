@@ -41,21 +41,12 @@ end
 local function displayMailsInfo(self)
 	local numItems, totalItems = GetInboxNumItems();
 	local numAttach, totalGold = CountItemsAndMoney(self);
-	local pozostalo, turatxt, itemy, gold = " "," "," "," ";
+	local itemy, gold = " "," ";
 	if numAttach ~= 0 then itemy   = "Ilosc itemow w mailach: |cFF33FF33"..numAttach.."|r\n" end
-	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(forsaTranslate(totalGold)).."|r" end
+	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(GetMoneyString(math.abs(totalGold))).."|r" end
 	if totalItems > 0 then
 		MainFrame:Show();
-		local tury = ceil(totalItems / 50);
-		if tury < 5 then
-			pozostalo = "Pozostaly";
-			tura = "tury";
-		elseif tury > 4 then
-			pozostalo = "Pozostalo";
-			tura = "tur";
-		end
-		if tury ~= 1 then turatxt = "\n"..pozostalo.." |cFF33FF33"..tostring(tury).."|r "..tura.." otwierania." end
-		MainFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold .. turatxt);
+		MainFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold);
 	else
 		print("|cFFFF99FFSkrzynka pusta :(|r");
 	end
@@ -75,10 +66,6 @@ function CountItemsAndMoney(self)
 	end
 	self:RegisterEvent("MAIL_INBOX_UPDATE");
 	return numAttach, numGold
-end
-
-function forsaTranslate(money)
-	return GetMoneyString(math.abs(money));
 end
 
 local function eventHandler(self, event, ...)
@@ -136,7 +123,6 @@ local function eventHandler(self, event, ...)
 	end
 end
 -- ===================================================================================================================================================================================================
-
 local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("ADDON_LOADED")
 		frame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -154,22 +140,19 @@ MsgBox.showMsgBox = function (self,text,title)
 	if title and title ~= "" then self.header:SetText(tostring(title)) end
 	if text and text ~= "" then self.text:SetText(tostring(text)) end
 	if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
-	-- self:SetSize(tonumber(DBGROPT.msgbox_width) or 300, tonumber(DBGROPT.msgbox_height) or 100)
 	self:Show()
 end
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
 ChatFrame1EditBox:SetAltArrowKeyMode(false);
-
 SLASH_DBFRAME1 = "/dbgr"
 function SlashCmdList.DBFRAME(msg, editbox)
-	if msg == "" then	MsgBox:showMsgBox();	end																			-- show last message in frame
-	if msg == "config" then SettingsFrame:Show();	end
+	if msg == "" then	MsgBox:Show();	end																			-- show last message in frame
+	if msg == "config" then InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);	end
 	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
 	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
 end
 
---#region 		SettingsFrame UI handlers
 function OnShow_SettingsFrame(obj)
 	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(30),(" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(30)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
@@ -177,31 +160,10 @@ function OnShow_SettingsFrame(obj)
 	SetAfkNotify:SetChecked(DBGROPT.afk);
 	SetXPNotify:SetChecked(DBGROPT.xpinfo);
 end
-function OnClick_SaveReload()
-	SettingsFrame:Hide();
-	ReloadUI();
-end
-function OnClick_RestoreDef()
-	DBGROPT = {
-				sound=true,
-				xpinfo=true,
-				ah=true,
-				afk=true,
-				icon_size=24
-			};
-	SettingsFrame:Hide();
-end
-function OnClick_SetNotifySounds(obj, _)
-	DBGROPT.sound = obj:GetChecked();
-end
-function OnClick_SetAHNotify(obj, _)
-	DBGROPT.ah = obj:GetChecked();
-end
-function OnClick_SetAfkNotify(obj, _)
-	DBGROPT.afk = obj:GetChecked();
-end
-function OnClick_SetXPNotify(obj, _)
-	DBGROPT.xpinfo = obj:GetChecked();
-end
---#endregion 	SettingsFrame UI handlers
+function OnClick_SetNotifySounds(obj, _)	DBGROPT.sound = obj:GetChecked();	end
+function OnClick_SetAHNotify(obj, _)		DBGROPT.ah = obj:GetChecked();		end
+function OnClick_SetAfkNotify(obj, _)		DBGROPT.afk = obj:GetChecked();		end
+function OnClick_SetXPNotify(obj, _)		DBGROPT.xpinfo = obj:GetChecked();	end
+function OnClick_SaveReload()				ReloadUI();							end
+function OnClick_RestoreDef()				DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24};	end
 
