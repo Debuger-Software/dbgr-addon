@@ -66,20 +66,20 @@
 					<OnClick>OnClick_SetXPNotify(self);</OnClick>
 				</Scripts>
 			</CheckButton>
-			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp; Reload">
-				<Size x="110" y="20" />
-				<Anchors><Anchor x="20" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" /></Anchors>
-				<Scripts>
-					<OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>
-					<OnClick>ReloadUI();</OnClick>
-				</Scripts>
-			</Button>
 			<Button name="BtnRestoreDef" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Restore Defaults">
-				<Size x="115" y="30" />
-				<Anchors><Anchor x="218" y="20" point="BOTTOMLEFT" relativeTo="SettingsFrame" relativePoint="BOTTOMLEFT" /></Anchors>
+				<Size x="120" y="20" />
+				<Anchors><Anchor x="-5" y="5" point="BOTTOMRIGHT" relativeTo="SettingsFrame" relativePoint="BOTTOMRIGHT" /></Anchors>
 				<Scripts>
 					<OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>
 					<OnClick>OnClick_RestoreDef();</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp; Reload">
+				<Size x="110" y="20" />
+				<Anchors><Anchor x="-5" y="0" point="RIGHT" relativeTo="BtnRestoreDef" relativePoint="LEFT" /></Anchors>
+				<Scripts>
+					<OnLoad>self:RegisterForClicks("AnyUp")</OnLoad>
+					<OnClick>ReloadUI();</OnClick>
 				</Scripts>
 			</Button>
 		</Frames>
