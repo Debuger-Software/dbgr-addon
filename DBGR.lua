@@ -42,13 +42,13 @@ local function displayMailsInfo(self)
 	local numItems, totalItems = GetInboxNumItems();
 	local numAttach, totalGold = CountItemsAndMoney(self);
 	local itemy, gold = " "," ";
-	if numAttach ~= 0 then itemy   = "Ilosc itemow w mailach: |cFF33FF33"..numAttach.."|r\n" end
-	if totalGold ~= 0 then gold    = "Ilosc golda w mailach: |cFF33FF33"..tostring(GetMoneyString(math.abs(totalGold))).."|r" end
+	if numAttach ~= 0 then itemy   = "Items in mails: |cFF33FF33"..numAttach.."|r\n" end
+	if totalGold ~= 0 then gold    = "Gold in mails: |cFF33FF33"..tostring(GetMoneyString(math.abs(totalGold))).."|r" end
 	if totalItems > 0 then
 		MainFrame:Show();
-		MainFrame_Text:SetText("W skrzynce jest w sumie |cFFFF00FF"..totalItems.."|r maili.\n" .. itemy .. gold);
+		MainFrame_Text:SetText("You have |cFFFF00FF"..totalItems.."|r mails.\n" .. itemy .. gold);
 	else
-		print("|cFFFF99FFSkrzynka pusta :(|r");
+		print("|cFFFF99FFInbox is empty :(|r");
 	end
 	MsgBox.opener="MAIL"
 end
