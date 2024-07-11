@@ -7,7 +7,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      CF_API_KEY: $({ secrets.API_KEY })
+      CF_API_KEY: de2bf86b-5b30-4664-81aa-810f7ff5a5f5
       
     steps:
       - name: Clone project
