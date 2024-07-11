@@ -1,4 +1,4 @@
-name: Package and release
+name: Spakuj i wrzuć na CurseForge
 
 on:
   push:
@@ -12,13 +12,13 @@ jobs:
       CF_API_KEY: ${{secrets.API_KEY}}
       
     steps:
-      - name: Clone project
+      - name: Klonowanie repo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # gets entire git history, needed for automatic changelogs
+          fetch-depth: 1  # gets entire git history, needed for automatic changelogs
 
-      # once cloned, we just run the GitHub Action for the packager project
-      - name: Package and release
+      - name: Pakowanie i upload
         uses: BigWigsMods/packager@v2
         with:
             args: -g cata -p 1028809 -l -o -n "{package-name}_{project-version}_{project-timestamp}:{package-name}_{project-version}"
+            
