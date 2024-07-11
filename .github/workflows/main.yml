@@ -1,0 +1,22 @@
+name: Package and release
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: "de2bf86b-5b30-4664-81aa-810f7ff5a5f5"
+      
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # gets entire git history, needed for automatic changelogs
+
+      # once cloned, we just run the GitHub Action for the packager project
+      - name: Package and release
+        uses: BigWigsMods/packager@v2
