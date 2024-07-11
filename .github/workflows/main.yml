@@ -21,4 +21,4 @@ jobs:
       - name: Package and release
         uses: BigWigsMods/packager@v2
         with:
-            args: -g cata -p 1028809 -l -o -n "{package-name}_{project-version}_{project-timestamp}:{package-name}_{project-version}"
+            args: -g cata -p 1028809 -l -o -n "{package-name}_{project-version}_{project-timestamp}:DBGR_{package-name}_{project-version}"
