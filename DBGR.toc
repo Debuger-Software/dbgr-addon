@@ -13,7 +13,7 @@
 ## X-eMail: debuger@debuger.eu
 ## X-License: GPL3
 ## X-Release: Main
-## X-Revision: 2
+## X-Revision: 14
 
 SettingsFrame.xml
 MainFrame.xml
