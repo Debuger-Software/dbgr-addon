@@ -7,7 +7,7 @@ jobs:
         - name: Upload to CurseForge
           uses: itsmeow/curseforge-upload@v3.1.2
           with:
-                file_path: "/archive/refs/heads/main.zip"
+                file_path: "https://github.com/Debuger-Software/dbgr-addon/archive/refs/heads/main.zip"
                 game_endpoint: "wow"
                 game_versions: "4.4.0"
                 project_id: "1028809"
