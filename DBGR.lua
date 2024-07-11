@@ -1,5 +1,3 @@
----@diagnostic disable: inject-field, deprecated, undefined-global
-
 local ADDON_NAME = "DBGR"
 local ADDON_VERSION = format("%s rev.%s",GetAddOnMetadata(ADDON_NAME, "Version"),GetAddOnMetadata(ADDON_NAME, "X-Revision"))
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
@@ -22,7 +20,7 @@ local function showAlertOnScreen(text,r,g,b,t,f,top)
 			msg:SetHeight(500);
 			msg:SetPoint("TOP", 0, -200);
 			msg:SetPoint("CENTER", 0, top);
-			msg:SetInsertMode(1)
+			msg:SetInsertMode("TOP")
 			msg:SetFrameStrata("HIGH")
 			msg:SetTimeVisible(t)
 			msg:SetFadeDuration(f)
