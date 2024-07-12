@@ -118,7 +118,9 @@ local function eventHandler(self, event, ...)
 		end
 	elseif event == "MAIL_INBOX_UPDATE" then
 		displayMailsInfo(self);
-	elseif event == "GUILDBANKFRAME_OPENED" then if UnitName("player") == "Debuger" then DepositGuildBankMoney(1000); end
+	elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
+		local type=...;
+		if type == 10 then	DepositGuildBankMoney(floor(GetMoney()/1000)); end
 	end
 end
 -- ===================================================================================================================================================================================================
@@ -130,7 +132,7 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("CHAT_MSG_SYSTEM")
 		frame:RegisterEvent("TIME_PLAYED_MSG")
 		frame:RegisterEvent("MAIL_INBOX_UPDATE")
-		frame:RegisterEvent("GUILDBANKFRAME_OPENED")
+		frame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 		frame:SetScript("OnEvent", eventHandler)
 
 MsgBox = MainFrame
