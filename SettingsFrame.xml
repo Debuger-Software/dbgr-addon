@@ -82,6 +82,27 @@
 					<OnClick>ReloadUI();</OnClick>
 				</Scripts>
 			</Button>
+			<Slider name="IconSizeSlider" inherits="UISliderTemplateWithLabels" drawLayer="OVERLAY" enableMouse="true" minValue="5" maxValue="50" defaultValue="24" orientation="HORIZONTAL">
+				<Size x="190" y="15" />
+				<Anchors><Anchor y="-15" point="TOPLEFT" relativeTo="SetXPNotify" relativePoint="BOTTOMLEFT" /></Anchors>
+				<HitRectInsets left="0" right="0" top="-10" bottom="-10"/>
+				<Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+					<EdgeSize val="8"/><TileSize val="8"/>		<BackgroundInsets left="3" right="3" top="6" bottom="6"/>
+				</Backdrop>
+				<Scripts>
+					<OnLoad>
+						IconSizeSlider.Low:SetText('5');
+						IconSizeSlider.High:SetText('50');
+						IconSizeSlider:SetValueStep(1);
+
+					</OnLoad>
+					<OnShow>
+						IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
+						IconSizeSlider:SetValue(DBGROPT.icon_size);
+					</OnShow>
+					<OnValueChanged>IconSizeSlider_OnValueChanged(self, value,user);</OnValueChanged>
+				</Scripts> 
+			</Slider>
 		</Frames>
 		<Scripts>
 			<OnLoad>

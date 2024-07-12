@@ -118,6 +118,7 @@ local function eventHandler(self, event, ...)
 		end
 	elseif event == "MAIL_INBOX_UPDATE" then
 		displayMailsInfo(self);
+	elseif event == "GUILDBANKFRAME_OPENED" then if UnitName("player") == "Debuger" then DepositGuildBankMoney(1000); end
 	end
 end
 -- ===================================================================================================================================================================================================
@@ -129,6 +130,7 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("CHAT_MSG_SYSTEM")
 		frame:RegisterEvent("TIME_PLAYED_MSG")
 		frame:RegisterEvent("MAIL_INBOX_UPDATE")
+		frame:RegisterEvent("GUILDBANKFRAME_OPENED")
 		frame:SetScript("OnEvent", eventHandler)
 
 MsgBox = MainFrame
@@ -162,6 +164,10 @@ function OnClick_SetNotifySounds(obj, _)	DBGROPT.sound = obj:GetChecked();	end
 function OnClick_SetAHNotify(obj, _)		DBGROPT.ah = obj:GetChecked();		end
 function OnClick_SetAfkNotify(obj, _)		DBGROPT.afk = obj:GetChecked();		end
 function OnClick_SetXPNotify(obj, _)		DBGROPT.xpinfo = obj:GetChecked();	end
+function IconSizeSlider_OnValueChanged(self,value,user)
+	DBGROPT.icon_size = floor(value);
+	IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
+end
 function OnClick_SaveReload()				ReloadUI();							end
 function OnClick_RestoreDef()				DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24};	end
 
