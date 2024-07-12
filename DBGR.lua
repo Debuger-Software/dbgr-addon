@@ -167,6 +167,7 @@ function OnClick_SetAHNotify(obj, _)		DBGROPT.ah = obj:GetChecked();		end
 function OnClick_SetAfkNotify(obj, _)		DBGROPT.afk = obj:GetChecked();		end
 function OnClick_SetXPNotify(obj, _)		DBGROPT.xpinfo = obj:GetChecked();	end
 function IconSizeSlider_OnValueChanged(self,value,user)
+	if DBGROPT == nil then return	end
 	DBGROPT.icon_size = floor(value);
 	IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
 end
