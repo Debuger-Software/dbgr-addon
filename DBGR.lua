@@ -43,12 +43,16 @@ local function displayMailsInfo(self)
 	if numAttach ~= 0 then itemy   = "Items in mails: |cFF33FF33"..numAttach.."|r\n" end
 	if totalGold ~= 0 then gold    = "Gold in mails: |cFF33FF33"..tostring(GetMoneyString(math.abs(totalGold))).."|r" end
 	if totalItems > 0 then
+		MsgBox.opener="MAIL"
 		MainFrame:Show();
 		MainFrame_Text:SetText("You have |cFFFF00FF"..totalItems.."|r mails.\n" .. itemy .. gold);
 	else
-		print("|cFFFF99FFInbox is empty :(|r");
+		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then 
+			MainFrame_Text:SetText("Inbox is empty");
+		else
+			print("|cFFFF99FFInbox is empty :(|r");
+		end		
 	end
-	MsgBox.opener="MAIL"
 end
 
 function CountItemsAndMoney(self)
