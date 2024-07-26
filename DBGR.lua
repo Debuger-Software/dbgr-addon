@@ -119,8 +119,11 @@ local function eventHandler(self, event, ...)
 	elseif event == "MAIL_INBOX_UPDATE" then
 		displayMailsInfo(self);
 	elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
+		-- this is for internal use and 
+		-- work only on my alt character based by name
 		local type=...;
-		if type == 10 then	DepositGuildBankMoney(floor(GetMoney()/1000)); end
+		local char_name == tostring(UnitName("player"));
+		if char_name == "Vellcia" and type == 10 then DepositGuildBankMoney(floor(GetMoney()/1000)); end
 	end
 end
 -- ===================================================================================================================================================================================================
