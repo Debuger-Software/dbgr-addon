@@ -179,5 +179,5 @@ function IconSizeSlider_OnValueChanged(self,value,user)
 	IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
 end
 function OnClick_SaveReload()				ReloadUI();							end
-function OnClick_RestoreDef()				DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24};	end
+function OnClick_RestoreDef()				DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24}; print("DBGR Addon - default settings loaded.");	end
 
