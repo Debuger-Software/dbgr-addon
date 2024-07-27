@@ -9,11 +9,11 @@
 ## SavedVariables: DBGROPT
 ## X-Category: Miscellaneous
 ## X-Curse-Project-ID: 1028809
-## X-Date: 12-07-2024 17:58:30
+## X-Date: 27-07-2024 09:50:57
 ## X-eMail: debuger@debuger.eu
 ## X-License: GPL3
 ## X-Release: Main
-## X-Revision: 217
+## X-Revision: 219
 
 MainFrame.xml
 DBGR.lua

@@ -126,8 +126,8 @@ local function eventHandler(self, event, ...)
 		-- this is for internal use and 
 		-- work only on my alt character based by name
 		local type=...;
-		local char_name == tostring(UnitName("player"));
-		if char_name == "Vellcia" and type == 10 then DepositGuildBankMoney(floor(GetMoney()/1000)); end
+		local char_name = tostring(UnitName("player"));
+		if char_name == "Velcia" and type == 10 then DepositGuildBankMoney(floor(GetMoney()/1000)); end
 	end
 end
 -- ===================================================================================================================================================================================================
