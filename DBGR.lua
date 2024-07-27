@@ -124,10 +124,10 @@ local function eventHandler(self, event, ...)
 		displayMailsInfo(self);
 	elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
 		-- this is for internal use and 
-		-- work only on my alt character based by name
+		-- work only on my characters based by name
 		local type=...;
 		local char_name = tostring(UnitName("player"));
-		if char_name == "Velcia" and type == 10 then DepositGuildBankMoney(floor(GetMoney()/1000)); end
+		if (char_name == "Velcia" or char_name == "Debuger") and type == 10 then DepositGuildBankMoney(floor(GetMoney()/1000)); end
 	end
 end
 -- ===================================================================================================================================================================================================
@@ -178,6 +178,10 @@ function IconSizeSlider_OnValueChanged(self,value,user)
 	DBGROPT.icon_size = floor(value);
 	IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
 end
-function OnClick_SaveReload()				ReloadUI();							end
-function OnClick_RestoreDef()				DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24}; print("DBGR Addon - default settings loaded.");	end
+function OnClick_RestoreDef()
+	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24}; 
+	if SettingsFrame:IsShown() then	SettingsFrame:Hide(); SettingsFrame:Show();	end
+	print("DBGR Addon - default settings loaded.");
+end
 
+function OnClick_SaveReload()				ReloadUI();							end
