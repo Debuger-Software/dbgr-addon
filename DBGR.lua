@@ -161,17 +161,17 @@ end
 
 function OnShow_SettingsFrame(obj)
 	Title:SetText(format("%1$s%2$s%s %s (%s) - %s%2$s%1$s", LOGO(30), (" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, _L("SETTINGS"), LOGO(30)))
+	SetNotifySounds:SetChecked(DBGROPT.sound);
+	SetAHNotify:SetChecked(DBGROPT.ah);
+	SetAfkNotify:SetChecked(DBGROPT.afk);
+	SetXPNotify:SetChecked(DBGROPT.xpinfo);
+
 	SetNotifySoundsText:SetText(_L("SET_LABEL_NOTIFY_SND"));
 	SetAHNotifyText:SetText(_L("SET_LABEL_AH_RELATED"));
 	SetAfkNotifyText:SetText(_L("SET_LABEL_AFK_WARNS"));
 	SetXPNotifyText:SetText(_L("SET_LABEL_EXP_INFO"));
 	BtnRestoreDef:SetText(_L("SET_BTN_RESTORE_DEF"));
 	BtnSaveReload:SetText(_L("SET_BTN_SAVE"));
-
-	SetNotifySounds:SetChecked(DBGROPT.sound);
-	SetAHNotify:SetChecked(DBGROPT.ah);
-	SetAfkNotify:SetChecked(DBGROPT.afk);
-	SetXPNotify:SetChecked(DBGROPT.xpinfo);
 end
 function OnClick_SetNotifySounds(obj, _)	DBGROPT.sound = obj:GetChecked();	end
 function OnClick_SetAHNotify(obj, _)		DBGROPT.ah = obj:GetChecked();		end
