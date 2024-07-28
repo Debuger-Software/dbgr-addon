@@ -1,8 +1,8 @@
 local ADDON_NAME = "DBGR"
 local ADDON_VERSION = format("%s rev.%s",GetAddOnMetadata(ADDON_NAME, "Version"),GetAddOnMetadata(ADDON_NAME, "X-Revision"))
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
-local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 local TIME_REQ = false
+local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -44,14 +44,9 @@ local function displayMailsInfo(self)
 	if totalGold ~= 0 then gold    = "Gold in mails: |cFF33FF33"..tostring(GetMoneyString(math.abs(totalGold))).."|r" end
 	if totalItems > 0 then
 		MsgBox.opener="MAIL"
-		MainFrame:Show();
-		MainFrame_Text:SetText("You have |cFFFF00FF"..totalItems.."|r mails.\n" .. itemy .. gold);
+		MsgBox:showMsgBox("You have |cFFFF00FF"..totalItems.."|r mails.\n" .. itemy .. gold);
 	else
-		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then 
-			MainFrame_Text:SetText("Inbox is empty");
-		else
-			print("|cFFFF99FFInbox is empty :(|r");
-		end		
+		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then MsgBox:showMsgBox("Inbox is empty");	else	print("|cFFFF99FFInbox is empty :(|r");		end		
 	end
 end
 
@@ -183,5 +178,4 @@ function OnClick_RestoreDef()
 	if SettingsFrame:IsShown() then	SettingsFrame:Hide(); SettingsFrame:Show();	end
 	print("DBGR Addon - default settings loaded.");
 end
-
 function OnClick_SaveReload()				ReloadUI();							end
