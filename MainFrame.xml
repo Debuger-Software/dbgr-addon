@@ -4,7 +4,7 @@
 		<Anchors><Anchor x="-9" y="20" point="CENTER" /></Anchors>
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture file="Interface\AddOns\DBGR\img\darkflamebg" name="$parent_bg" alpha="0.8">
+				<Texture file="Interface\AddOns\DBGR\img\FrameBg" name="$parent_bg" alpha="0.8">
 					<Size x="500" y="200" />
 					<Anchors><Anchor point="CENTER" x="0" y="0" /></Anchors>
 				</Texture>
