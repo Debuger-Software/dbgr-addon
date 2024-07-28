@@ -3,7 +3,6 @@ local ADDON_VERSION = format("%s rev.%s",GetAddOnMetadata(ADDON_NAME, "Version")
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local TIME_REQ = false
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
-_L = function (key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -42,8 +41,7 @@ local function displayMailsInfo(self)
 	local numAttach, totalGold = CountItemsAndMoney(self);
 	local itemy, gold = " "," ";
 	if numAttach ~= 0 then itemy = _L("ITEMS_IN_MAILS") .. "|cFF33FF33" .. numAttach .. "|r" end
-	if totalGold ~= 0 then gold = _L("GOLD_IN_MAILS") .. "|cFF33FF33" .. tostring(GetMoneyString(math.abs(totalGold))) ..
-		"|r" end
+	if totalGold ~= 0 then gold = _L("GOLD_IN_MAILS") .. "|cFF33FF33" .. tostring(GetMoneyString(math.abs(totalGold))) .. "|r" end
 	if totalItems > 0 then
 		MsgBox.opener="MAIL"
 		MsgBox:showMsgBox(format(_L("MAIL_INFO_TEXT"),totalItems,itemy,gold));
@@ -177,6 +175,15 @@ function OnClick_SetNotifySounds(obj, _)	DBGROPT.sound = obj:GetChecked();	end
 function OnClick_SetAHNotify(obj, _)		DBGROPT.ah = obj:GetChecked();		end
 function OnClick_SetAfkNotify(obj, _)		DBGROPT.afk = obj:GetChecked();		end
 function OnClick_SetXPNotify(obj, _)		DBGROPT.xpinfo = obj:GetChecked();	end
+function IconSizeSlider_OnLoad()
+	IconSizeSlider.Low:SetText('5');
+	IconSizeSlider.High:SetText('50');
+	IconSizeSlider:SetValueStep(1);
+end
+function IconSizeSlider_OnShow()
+	IconSizeSlider.Text:SetText(format("%s: %d",_L("CHAT_ICON_SIZE_LABEL"), DBGROPT.icon_size));
+	IconSizeSlider:SetValue(DBGROPT.icon_size);
+end
 function IconSizeSlider_OnValueChanged(self,value,user)
 	if DBGROPT == nil then return	end
 	DBGROPT.icon_size = floor(value);

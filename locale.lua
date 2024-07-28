@@ -38,3 +38,8 @@ _Lang["PL"] = {
     SET_BTN_RESTORE_DEF     = "Przywroc domyslne",
     SET_BTN_SAVE            = "Zapisz"
 };
+
+
+
+
+function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
