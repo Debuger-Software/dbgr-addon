@@ -33,8 +33,8 @@ _Lang["PL"] = {
     DEFAULT_SETTINGS_LOADED = "Przywrócono ustawienia domyslne.",
     SET_LABEL_NOTIFY_SND    = "Dzwiek podczas powiadomien",
     SET_LABEL_AH_RELATED    = "Powiadomienia dot. aukcji",
-    SET_LABEL_AFK_WARNS     = "Ostrzeżenie o bezczynnosci (AFK)",
+    SET_LABEL_AFK_WARNS     = "Ostrzezenie o bezczynnosci (AFK)",
     SET_LABEL_EXP_INFO      = "Szczegoly dot. zdobywanego dosw. (na czacie)",
     SET_BTN_RESTORE_DEF     = "Przywroc domyslne",
-    SET_BTN_SAVE            = "Zapisz &amp; Przeladuj"
+    SET_BTN_SAVE            = "Zapisz"
 };
