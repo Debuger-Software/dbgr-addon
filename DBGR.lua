@@ -3,6 +3,7 @@ local ADDON_VERSION = format("%s rev.%s",GetAddOnMetadata(ADDON_NAME, "Version")
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local TIME_REQ = false
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
+_L = function (key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
@@ -40,13 +41,14 @@ local function displayMailsInfo(self)
 	local numItems, totalItems = GetInboxNumItems();
 	local numAttach, totalGold = CountItemsAndMoney(self);
 	local itemy, gold = " "," ";
-	if numAttach ~= 0 then itemy   = "Items in mails: |cFF33FF33"..numAttach.."|r\n" end
-	if totalGold ~= 0 then gold    = "Gold in mails: |cFF33FF33"..tostring(GetMoneyString(math.abs(totalGold))).."|r" end
+	if numAttach ~= 0 then itemy = _L("ITEMS_IN_MAILS") .. "|cFF33FF33" .. numAttach .. "|r" end
+	if totalGold ~= 0 then gold = _L("GOLD_IN_MAILS") .. "|cFF33FF33" .. tostring(GetMoneyString(math.abs(totalGold))) ..
+		"|r" end
 	if totalItems > 0 then
 		MsgBox.opener="MAIL"
-		MsgBox:showMsgBox("You have |cFFFF00FF"..totalItems.."|r mails.\n" .. itemy .. gold);
+		MsgBox:showMsgBox(format(_L("MAIL_INFO_TEXT"),totalItems,itemy,gold));
 	else
-		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then MsgBox:showMsgBox("Inbox is empty");	else	print("|cFFFF99FFInbox is empty :(|r");		end		
+		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then MsgBox:showMsgBox(_L("EMPTY_INBOX")); else print("|cFFFF99FF" .. _L("EMPTY_INBOX") .. "|r"); end
 	end
 end
 
@@ -85,7 +87,7 @@ local function eventHandler(self, event, ...)
 	elseif event == "PLAYER_LEVEL_UP" then
 		local talentGroup = GetActiveTalentGroup(false, false)
 		local free_talent = tonumber(GetUnspentTalentPoints(false, false, talentGroup))
-		if free_talent > 0 then	MsgBox:showMsgBox(string.format("You have free %d unspent talent points!",free_talent)); MsgBox.opener="PLAYER_LEVEL_UP"; end
+		if free_talent > 0 then	MsgBox:showMsgBox(string.format(_L("UNSPENT_TALENTS"),free_talent)); MsgBox.opener="PLAYER_LEVEL_UP"; end
 	elseif event == "TIME_PLAYED_MSG" then
 		if TIME_REQ then
 			local timeTotal, timeCurLvl = ...
@@ -100,7 +102,7 @@ local function eventHandler(self, event, ...)
 			if MsgBox:IsShown() and MsgBox.opener == "AH_SELL" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), extracted), "Auction House")
 			else
-				MsgBox:showMsgBox(string.format("AH item sell: %s", extracted), "Auction House")
+				MsgBox:showMsgBox(string.format(_L("AH_ITEM_SELL"), extracted), "Auction House")
 			end
 			MsgBox.opener = "AH_SELL"
 		elseif	text:find("outbid") and DBGROPT.ah then
@@ -108,11 +110,11 @@ local function eventHandler(self, event, ...)
 			if MsgBox:IsShown() and MsgBox.opener == "AH_OUTBID" then
 				MsgBox:showMsgBox(string.format("%s, %s",MsgBox.text:GetText(), outbid_item), "Auction House")
 			else
-				MsgBox:showMsgBox(string.format("OUTBID: %s", outbid_item), "Auction House")
+				MsgBox:showMsgBox(string.format(_L("AH_OUTBID"), outbid_item), "Auction House")
 			end
 				MsgBox.opener = "AH_OUTBID"
 		elseif	text:find("AFK") and DBGROPT.afk then
-			MsgBox:showMsgBox("Move or your character has been logout soon!", "! ! !  AFK  WARNING  ! ! !")
+			MsgBox:showMsgBox(_L("AFK_WARN"), "! ! !  AFK  WARNING  ! ! !")
 			MsgBox.opener = "AFK_WARNING"
 		end
 	elseif event == "MAIL_INBOX_UPDATE" then
@@ -158,7 +160,14 @@ function SlashCmdList.DBFRAME(msg, editbox)
 end
 
 function OnShow_SettingsFrame(obj)
-	Title:SetText(format("%1$s%2$s%s %s (%s) - SETTINGS%2$s%1$s",LOGO(30),(" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, LOGO(30)))
+	Title:SetText(format("%1$s%2$s%s %s (%s) - %s%2$s%1$s", LOGO(30), (" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, _L("SETTINGS"), LOGO(30)))
+	SetNotifySoundsText:SetText(_L("SET_LABEL_NOTIFY_SND"));
+	SetAHNotifyText:SetText(_L("SET_LABEL_AH_RELATED"));
+	SetAfkNotifyText:SetText(_L("SET_LABEL_AFK_WARNS"));
+	SetXPNotifyText:SetText(_L("SET_LABEL_EXP_INFO"));
+	BtnRestoreDef:SetText(_L("SET_BTN_RESTORE_DEF"));
+	BtnSaveReload:SetText(_L("SET_BTN_SAVE"));
+
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
 	SetAfkNotify:SetChecked(DBGROPT.afk);
@@ -171,11 +180,11 @@ function OnClick_SetXPNotify(obj, _)		DBGROPT.xpinfo = obj:GetChecked();	end
 function IconSizeSlider_OnValueChanged(self,value,user)
 	if DBGROPT == nil then return	end
 	DBGROPT.icon_size = floor(value);
-	IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
+	IconSizeSlider.Text:SetText(format("%s: %d",_L("CHAT_ICON_SIZE_LABEL"), DBGROPT.icon_size));
 end
 function OnClick_RestoreDef()
-	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24}; 
+	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24, locale="EN"};  --TODO: CHANGE TO "EN"
 	if SettingsFrame:IsShown() then	SettingsFrame:Hide(); SettingsFrame:Show();	end
-	print("DBGR Addon - default settings loaded.");
+	print("DBGR Addon - ".._L("DEFAULT_SETTINGS_LOADED"));
 end
 function OnClick_SaveReload()				ReloadUI();							end

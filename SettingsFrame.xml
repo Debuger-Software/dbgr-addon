@@ -2,7 +2,7 @@
 	<Frame name="SettingsFrame" hidden="true" parent="UIParent" toplevel="true">
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="Title" inherits="GameFontRed" text="" outline="NORMAL">
+				<FontString name="Title" inherits="GameFontRed" outline="NORMAL">
 					<Size x="350" y="50" /><FontHeight val="16" /><Color r="1" />
 					<Anchors><Anchor point="TOP" relativeTo="SettingsFrame" relativePoint="TOP" /></Anchors>
 					<Shadow><Offset><AbsDimension x="1" y="-1" /></Offset><Color g="1" /></Shadow>
@@ -10,12 +10,12 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="SetNotifySounds" inherits="ChatConfigCheckButtonTemplate" text="">
+			<CheckButton name="SetNotifySounds" inherits="ChatConfigCheckButtonTemplate">
 				<Size x="25" y="25" />
 				<Anchors><Anchor x="30" y="-30" point="TOPLEFT" relativeTo="Title" relativePoint="BOTTOMLEFT" /></Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Notification sounds" justifyH="LEFT">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
 							<Anchors><Anchor x="10" point="LEFT" relativePoint="RIGHT" /></Anchors>
 						</FontString>
 					</Layer>
@@ -24,12 +24,12 @@
 					<OnClick>OnClick_SetNotifySounds(self);</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="SetAHNotify" inherits="ChatConfigCheckButtonTemplate" text="">
+			<CheckButton name="SetAHNotify" inherits="ChatConfigCheckButtonTemplate">
 				<Size x="25" y="25" />
 				<Anchors><Anchor y="-60" point="BOTTOM" relativeTo="SetNotifySounds" relativePoint="TOP" /></Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Auction House related notifications" justifyH="LEFT">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
 							<Anchors><Anchor x="10" point="LEFT" relativePoint="RIGHT" /></Anchors>
 						</FontString>
 					</Layer>
@@ -38,12 +38,12 @@
 					<OnClick>OnClick_SetAHNotify(self);</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="SetAfkNotify" inherits="ChatConfigCheckButtonTemplate" text="">
+			<CheckButton name="SetAfkNotify" inherits="ChatConfigCheckButtonTemplate">
 				<Size x="25" y="25" />
 				<Anchors><Anchor y="-60" point="BOTTOM" relativeTo="SetAHNotify" relativePoint="TOP" /></Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="AFK warnings" justifyH="LEFT">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
 							<Anchors><Anchor x="10" point="LEFT" relativePoint="RIGHT" /></Anchors>
 						</FontString>
 					</Layer>
@@ -52,12 +52,12 @@
 					<OnClick>OnClick_SetAfkNotify(self);</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="SetXPNotify" inherits="ChatConfigCheckButtonTemplate" text="">
+			<CheckButton name="SetXPNotify" inherits="ChatConfigCheckButtonTemplate">
 				<Size x="25" y="25" />
 				<Anchors><Anchor y="-60" point="BOTTOM" relativeTo="SetAfkNotify" relativePoint="TOP" /></Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="Experience related info (on chat)" justifyH="LEFT">
+						<FontString name="$parentText" parentKey="Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
 							<Anchors><Anchor x="10" point="LEFT" relativePoint="RIGHT" /></Anchors>
 						</FontString>
 					</Layer>
@@ -66,7 +66,7 @@
 					<OnClick>OnClick_SetXPNotify(self);</OnClick>
 				</Scripts>
 			</CheckButton>
-			<Button name="BtnRestoreDef" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Restore Defaults">
+			<Button name="BtnRestoreDef" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="">
 				<Size x="120" y="20" />
 				<Anchors><Anchor x="-5" y="5" point="BOTTOMRIGHT" relativeTo="SettingsFrame" relativePoint="BOTTOMRIGHT" /></Anchors>
 				<Scripts>
@@ -74,7 +74,7 @@
 					<OnClick function="OnClick_RestoreDef" />
 				</Scripts>
 			</Button>
-			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Save &amp; Reload">
+			<Button name="BtnSaveReload" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="">
 				<Size x="110" y="20" />
 				<Anchors><Anchor x="-5" y="0" point="RIGHT" relativeTo="BtnRestoreDef" relativePoint="LEFT" /></Anchors>
 				<Scripts>
@@ -97,7 +97,7 @@
 
 					</OnLoad>
 					<OnShow>
-						IconSizeSlider.Text:SetText(format("Chat icons size: %d", DBGROPT.icon_size));
+						IconSizeSlider.Text:SetText(format("%s: %d", _L("CHAT_ICON_SIZE_LABEL"), DBGROPT.icon_size));
 						IconSizeSlider:SetValue(DBGROPT.icon_size);
 					</OnShow>
 					<OnValueChanged>IconSizeSlider_OnValueChanged(self, value,user);</OnValueChanged>

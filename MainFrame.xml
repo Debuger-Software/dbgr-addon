@@ -8,14 +8,14 @@
 					<Size x="500" y="200" />
 					<Anchors><Anchor point="CENTER" x="0" y="0" /></Anchors>
 				</Texture>
-				<FontString name="$parent_Title" inherits="" font="Fonts\MORPHEUS.TTF" text="MailBox   Statistics" spacing="2" outline="NORMAL">
+				<FontString name="$parent_Title" inherits="" font="Fonts\MORPHEUS.TTF" text="" spacing="2" outline="NORMAL">
 					<Size x="500" y="30" />
 					<Anchors><Anchor x="0" y="-10" point="TOP" relativePoint="TOP" relativeTo="MainFrame" /></Anchors>
 					<FontHeight val="24" />
 					<Color g="0.7" r="1" />
 					<Shadow><Color r="0.502" g="1" b="0.502" /></Shadow>
 				</FontString>
-				<FontString name="$parent_Text" inherits="" font="Fonts\FRIZQT__.TTF" text="stats|nstats" spacing="1" outline="THICK" maxLines="5">
+				<FontString name="$parent_Text" inherits="" font="Fonts\FRIZQT__.TTF" text="" spacing="1" outline="THICK" maxLines="5">
 					<Size x="500" y="130" />
 					<Anchors><Anchor x="0" y="0" point="TOP" relativePoint="BOTTOM" relativeTo="$parent_Title" /></Anchors>
 					<FontHeight val="17" />
