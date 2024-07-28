@@ -188,3 +188,4 @@ function OnClick_RestoreDef()
 	print("DBGR Addon - ".._L("DEFAULT_SETTINGS_LOADED"));
 end
 function OnClick_SaveReload()				ReloadUI();							end
+function Select_Lang(lang) DBGROPT.locale = tostring(lang); ReloadUI(); end

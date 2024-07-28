@@ -17,7 +17,7 @@ _Lang["EN"] = {
     SET_LABEL_AFK_WARNS     = "AFK warnings",
     SET_LABEL_EXP_INFO      = "Experience related info (on chat)",
     SET_BTN_RESTORE_DEF     = "Restore Defaults",
-    SET_BTN_SAVE            = "Save &amp; Reload"
+    SET_BTN_SAVE            = "Save & Reload"
 };
 _Lang["PL"] = {
     ITEMS_IN_MAILS          = "Przedmioty w mailach: ",
@@ -27,7 +27,7 @@ _Lang["PL"] = {
     UNSPENT_TALENTS         = "Masz %d nieprzydzielonych punktów talentów!",
     AH_ITEM_SELL            = "Sprzedane przedmioty: %s",
     AH_OUTBID               = "Twoja oferta w licytacji %s zostala przebita",
-    AFK_WARN                = "Rusz sie, w przeciwnym wypadku Twoja postać zostanie niedługo wylogowana!",
+    AFK_WARN                = "Rusz sie, w przeciwnym wypadku Twoja postac zostanie niedługo wylogowana!",
     SETTINGS                = "USTAWIENIA",
     CHAT_ICON_SIZE_LABEL    = "Rozmiar ikon czatu",
     DEFAULT_SETTINGS_LOADED = "Przywrócono ustawienia domyslne.",

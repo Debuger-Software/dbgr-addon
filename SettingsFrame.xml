@@ -103,6 +103,14 @@
 					<OnValueChanged>IconSizeSlider_OnValueChanged(self, value,user);</OnValueChanged>
 				</Scripts> 
 			</Slider>
+			<Button name="BtnLocaleSelectEN" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="English">
+				<Size x="110" y="25" />		<Anchors><Anchor x="0" y="20" point="BOTTOMLEFT" relativeTo="BtnSaveReload" relativePoint="TOPLEFT" /></Anchors>
+				<Scripts><OnClick>Select_Lang("EN");</OnClick></Scripts>
+           </Button>
+			<Button name="BtnLocaleSelectPL" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Polski">
+				<Size x="110" y="25" />		<Anchors><Anchor x="10" y="0" point="LEFT" relativeTo="BtnLocaleSelectEN" relativePoint="RIGHT" /></Anchors>
+				<Scripts><OnClick>Select_Lang("PL");</OnClick></Scripts>
+           </Button>
 		</Frames>
 		<Scripts>
 			<OnLoad>
