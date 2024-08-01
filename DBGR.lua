@@ -91,7 +91,7 @@ local function eventHandler(self, event, ...)
 	elseif event == "TIME_PLAYED_MSG" then
 		if TIME_REQ then
 			local timeTotal, timeCurLvl = ...
-			MsgBox:showMsgBox(string.format("Total:  %s\nLevel:  %s",SecondsToTime(timeTotal),SecondsToTime(timeCurLvl)),"Play time statistics")
+			MsgBox:showMsgBox(string.format("%s:  %s\nLevel:  %s",_L("TOTAL"),SecondsToTime(timeTotal),SecondsToTime(timeCurLvl)),_L("PLAY_TIME_STATS"))
 			MsgBox.opener = "TIME_PLAYED_MSG"
 			TIME_REQ = false
 		end

@@ -17,7 +17,9 @@ _Lang["EN"] = {
     SET_LABEL_AFK_WARNS     = "AFK warnings",
     SET_LABEL_EXP_INFO      = "Experience related info (on chat)",
     SET_BTN_RESTORE_DEF     = "Restore Defaults",
-    SET_BTN_SAVE            = "Save & Reload"
+    SET_BTN_SAVE            = "Save & Reload",
+    TOTAL                   = "Total",
+    PLAY_TIME_STATS         = "Play time statistics"
 };
 _Lang["PL"] = {
     ITEMS_IN_MAILS          = "Przedmioty w mailach: ",
@@ -36,5 +38,7 @@ _Lang["PL"] = {
     SET_LABEL_AFK_WARNS     = "Ostrzezenie o bezczynnosci (AFK)",
     SET_LABEL_EXP_INFO      = "Szczegoly dot. zdobywanego dosw. (na czacie)",
     SET_BTN_RESTORE_DEF     = "Przywroc domyslne",
-    SET_BTN_SAVE            = "Zapisz"
+    SET_BTN_SAVE            = "Zapisz",
+    TOTAL                   = "Razem",
+    PLAY_TIME_STATS         = "Statystyki czasu gry"
 };
