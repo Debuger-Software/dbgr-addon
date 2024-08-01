@@ -4,6 +4,8 @@ local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local TIME_REQ = false
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 
+function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
+
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())
 	local 	function iconForLink(link)	return string.format(" %s \124T%s:%s\124t  ",link,GetItemIcon(link),DBGROPT.icon_size);	end
@@ -68,7 +70,10 @@ end
 local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
-		if loadedAddon == ADDON_NAME and DBGROPT == nil then OnClick_RestoreDef(); end -- DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing options
+		if loadedAddon == ADDON_NAME then
+			if DBGROPT == nil then OnClick_RestoreDef(); end -- DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing options
+		end
+
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		local is_init_login, is_reloading_UI = ...
 		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE),255,75,0,8,5,500) end

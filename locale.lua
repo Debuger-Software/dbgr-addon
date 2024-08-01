@@ -46,4 +46,4 @@ _Lang["PL"] = {
 
 
 
-function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
+-- function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
