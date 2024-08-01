@@ -4,7 +4,10 @@ local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
 local TIME_REQ = false
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 
-function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
+function _L(key)
+	if lang_exist(DBGROPT.locale) == false then DBGROPT.locale = "EN" end
+	return _Lang[DBGROPT.locale][key] or "**str_not_found**"
+end
 
 function AddLootIcons(self, event, msg, ...)
 	local _, fontSize = GetChatWindowInfo(self:GetID())

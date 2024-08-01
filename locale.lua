@@ -43,7 +43,10 @@ _Lang["PL"] = {
     PLAY_TIME_STATS         = "Statystyki czasu gry"
 };
 
-
+function lang_exist(lang)
+    for k, _ in pairs(_Lang) do if k == lang then return true end end
+    return false
+end
 
 
 -- function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end
