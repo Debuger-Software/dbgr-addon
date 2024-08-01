@@ -42,3 +42,8 @@ _Lang["PL"] = {
     TOTAL                   = "Razem",
     PLAY_TIME_STATS         = "Statystyki czasu gry"
 };
+
+
+
+
+function _L(key) return _Lang[DBGROPT.locale][key] or "**str_not_found**" end

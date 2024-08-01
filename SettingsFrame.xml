@@ -90,16 +90,7 @@
 					<EdgeSize val="8"/><TileSize val="8"/>		<BackgroundInsets left="3" right="3" top="6" bottom="6"/>
 				</Backdrop>
 				<Scripts>
-					<OnLoad>
-						IconSizeSlider.Low:SetText('5');
-						IconSizeSlider.High:SetText('50');
-						IconSizeSlider:SetValueStep(1);
-
-					</OnLoad>
-					<OnShow>
-						IconSizeSlider.Text:SetText(format("%s: %d", _L("CHAT_ICON_SIZE_LABEL"), DBGROPT.icon_size));
-						IconSizeSlider:SetValue(DBGROPT.icon_size);
-					</OnShow>
+					<OnLoad function="IconSizeSlider_OnLoad"/><OnShow function="IconSizeSlider_OnShow"/>
 					<OnValueChanged>IconSizeSlider_OnValueChanged(self, value,user);</OnValueChanged>
 				</Scripts> 
 			</Slider>
@@ -108,7 +99,7 @@
 				<Scripts><OnClick>Select_Lang("EN");</OnClick></Scripts>
            </Button>
 			<Button name="BtnLocaleSelectPL" inherits="MagicButtonTemplate" enableMouse="true" enableMouseClicks="true" text="Polski">
-				<Size x="110" y="25" />		<Anchors><Anchor x="10" y="0" point="LEFT" relativeTo="BtnLocaleSelectEN" relativePoint="RIGHT" /></Anchors>
+				<Size x="110" y="25" />		<Anchors><Anchor x="0" y="20" point="BOTTOMLEFT" relativeTo="BtnRestoreDef" relativePoint="TOPLEFT" /></Anchors>
 				<Scripts><OnClick>Select_Lang("PL");</OnClick></Scripts>
            </Button>
 		</Frames>
