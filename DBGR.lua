@@ -1,7 +1,8 @@
 local ADDON_NAME = "DBGR"
 local ADDON_VERSION = format("%s rev.%s",GetAddOnMetadata(ADDON_NAME, "Version"),GetAddOnMetadata(ADDON_NAME, "X-Revision"))
 local ADDON_REL_TYPE = GetAddOnMetadata(ADDON_NAME, "X-Release")
-local TIME_REQ = false
+local TIME_REQ = false;
+local UpdateTimer = 0;
 local LOGO = function(size) return string.format("|TInterface\\AddOns\\DBGR\\img\\d:%d|t", size) end
 
 function _L(key)
@@ -58,11 +59,9 @@ end
 function CountItemsAndMoney(self)
 	local numAttach = 0;
 	local numGold = 0;
-	local msgSubject;
-	local spam = 0;
 	self:UnregisterEvent("MAIL_INBOX_UPDATE");
 	for i = 1, GetInboxNumItems() do
-			local msgSubject, msgMoney, _, _, msgItem = select(4, GetInboxHeaderInfo(i))
+			local _, msgMoney, _, _, msgItem = select(4, GetInboxHeaderInfo(i))
 			numAttach = numAttach + (msgItem or 0);
 			numGold = numGold + msgMoney;
 	end
@@ -125,6 +124,7 @@ local function eventHandler(self, event, ...)
 		end
 	elseif event == "MAIL_INBOX_UPDATE" then
 		displayMailsInfo(self);
+	elseif event == "MAIL_CLOSED" and MsgBox.opener == "MAIL" then MsgBox:Hide();
 	elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
 		-- this is for internal use and 
 		-- work only on my characters based by name
@@ -132,37 +132,6 @@ local function eventHandler(self, event, ...)
 		local char_name = tostring(UnitName("player"));
 		if (char_name == "Velcia" or char_name == "Debuger") and type == 10 then DepositGuildBankMoney(floor(GetMoney()/1000)); end
 	end
-end
--- ===================================================================================================================================================================================================
-local	frame = CreateFrame("Frame")
-		frame:RegisterEvent("ADDON_LOADED")
-		frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-		frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
-		frame:RegisterEvent("PLAYER_LEVEL_UP")
-		frame:RegisterEvent("CHAT_MSG_SYSTEM")
-		frame:RegisterEvent("TIME_PLAYED_MSG")
-		frame:RegisterEvent("MAIL_INBOX_UPDATE")
-		frame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
-		frame:SetScript("OnEvent", eventHandler)
-
-MsgBox = MainFrame
-MsgBox.header = MainFrame_Title
-MsgBox.text = MainFrame_Text
-MsgBox.showMsgBox = function (self,text,title)
-	if title and title ~= "" then self.header:SetText(tostring(title)) end
-	if text and text ~= "" then self.text:SetText(tostring(text)) end
-	if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
-	self:Show()
-end
-
-ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
-ChatFrame1EditBox:SetAltArrowKeyMode(false);
-SLASH_DBFRAME1 = "/dbgr"
-function SlashCmdList.DBFRAME(msg, editbox)
-	if msg == "" then	MsgBox:Show();	end																			-- show last message in frame
-	if msg == "config" then InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);	end
-	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
-	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
 end
 
 function OnShow_SettingsFrame(obj)
@@ -204,3 +173,44 @@ function OnClick_RestoreDef()
 end
 function OnClick_SaveReload()				ReloadUI();							end
 function Select_Lang(lang) DBGROPT.locale = tostring(lang); ReloadUI(); end
+
+-- ===================================================================================================================================================================================================
+local	frame = CreateFrame("Frame")
+		frame:RegisterEvent("ADDON_LOADED")
+		frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+		frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
+		frame:RegisterEvent("PLAYER_LEVEL_UP")
+		frame:RegisterEvent("CHAT_MSG_SYSTEM")
+		frame:RegisterEvent("TIME_PLAYED_MSG")
+		frame:RegisterEvent("MAIL_INBOX_UPDATE")
+		frame:RegisterEvent("MAIL_CLOSED")
+		frame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+		frame:SetScript("OnEvent", eventHandler)
+		frame:SetScript("OnUpdate", onUpdate)
+
+MsgBox = MainFrame
+MsgBox.header = MainFrame_Title
+MsgBox.text = MainFrame_Text
+MsgBox.showMsgBox = function (self,text,title)
+	if title and title ~= "" then self.header:SetText(tostring(title)) end
+	if text and text ~= "" then self.text:SetText(tostring(text)) end
+	if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
+	self:Show()
+end
+
+ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", AddLootIcons);
+ChatFrame1EditBox:SetAltArrowKeyMode(false);
+SLASH_DBFRAME1 = "/dbgr"
+function SlashCmdList.DBFRAME(msg, editbox)
+	if msg == "" then	MsgBox:Show();	end																			-- show last message in frame
+	if msg == "config" then InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);	end
+	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
+	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
+end
+
+function onUpdate(self, elapsed)
+	UpdateTimer = UpdateTimer + elapsed
+    if UpdateTimer < 5 then return end
+	print("[ DEBUG ]: 	test onUpdate");
+	UpdateTimer = 0
+end

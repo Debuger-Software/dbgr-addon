@@ -1,5 +1,5 @@
 <Ui xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/">
-	<Frame name="MainFrame" parent="UIParent" toplevel="true" hidden="true">
+	<Frame name="MainFrame" parent="UIParent" hidden="true" toplevel="true" movable="true">
 		<Size x="500" y="200" />
 		<Anchors><Anchor x="-9" y="20" point="CENTER" /></Anchors>
 		<Layers>
@@ -36,7 +36,7 @@
 			<OnLoad>
 				self:SetMovable(true);
 				self:RegisterForDrag("LeftButton");
-				self:SetScale(0.7);
+				self:SetScale(0.85);
 			</OnLoad>
 			<OnDragStart>self:StartMoving();</OnDragStart>
 			<OnDragStop>self:StopMovingOrSizing();</OnDragStop>
