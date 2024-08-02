@@ -174,6 +174,12 @@ end
 function OnClick_SaveReload()				ReloadUI();							end
 function Select_Lang(lang) DBGROPT.locale = tostring(lang); ReloadUI(); end
 
+function onUpdate(self, elapsed)
+	UpdateTimer = UpdateTimer + elapsed
+    if UpdateTimer < 5 then return end
+	print("[ DEBUG ]: 	test onUpdate");
+	UpdateTimer = 0
+end
 -- ===================================================================================================================================================================================================
 local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("ADDON_LOADED")
@@ -194,7 +200,7 @@ MsgBox.text = MainFrame_Text
 MsgBox.showMsgBox = function (self,text,title)
 	if title and title ~= "" then self.header:SetText(tostring(title)) end
 	if text and text ~= "" then self.text:SetText(tostring(text)) end
-	if DBGROPT.sound == true then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
+	if DBGROPT.sound == true and self.opener ~= "MAIL" then PlaySoundFile("Interface\\AddOns\\DBGR\\snd\\msg.wav"); end
 	self:Show()
 end
 
@@ -208,9 +214,3 @@ function SlashCmdList.DBFRAME(msg, editbox)
 	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
 end
 
-function onUpdate(self, elapsed)
-	UpdateTimer = UpdateTimer + elapsed
-    if UpdateTimer < 5 then return end
-	print("[ DEBUG ]: 	test onUpdate");
-	UpdateTimer = 0
-end
