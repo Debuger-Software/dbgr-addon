@@ -50,9 +50,9 @@ local function displayMailsInfo(self)
 	if totalGold ~= 0 then gold = _L("GOLD_IN_MAILS") .. "|cFF33FF33" .. tostring(GetMoneyString(math.abs(totalGold))) .. "|r" end
 	if totalItems > 0 then
 		MsgBox.opener="MAIL"
-		MsgBox:showMsgBox(format(_L("MAIL_INFO_TEXT"),totalItems,itemy,gold));
+		MsgBox:showMsgBox(format(_L("MAIL_INFO_TEXT"),totalItems,itemy,gold), _L("MAILBOX"));
 	else
-		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then MsgBox:showMsgBox(_L("EMPTY_INBOX")); else print("|cFFFF99FF" .. _L("EMPTY_INBOX") .. "|r"); end
+		if MsgBox:IsShown() and MsgBox.opener == "MAIL" then MsgBox:showMsgBox(_L("EMPTY_INBOX"), _L("MAILBOX")); else	print("|cFFFF99FF" .. _L("EMPTY_INBOX") .. "|r"); end
 	end
 end
 

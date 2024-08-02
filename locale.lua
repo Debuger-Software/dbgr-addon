@@ -1,6 +1,7 @@
 _Lang = {"EN", "PL"};
 
 _Lang["EN"] = {
+    MAILBOX                 = "MAILBOX",
     ITEMS_IN_MAILS          = "Items in mails: ",
     GOLD_IN_MAILS           = "Gold in mails: ",
     MAIL_INFO_TEXT          = "You have |cFFFF00FF %d|r mails.\n%s\n%s",
@@ -19,9 +20,10 @@ _Lang["EN"] = {
     SET_BTN_RESTORE_DEF     = "Restore Defaults",
     SET_BTN_SAVE            = "Save & Reload",
     TOTAL                   = "Total",
-    PLAY_TIME_STATS         = "Play time statistics"
+    PLAY_TIME_STATS         = "Play time statistics",
 };
 _Lang["PL"] = {
+    MAILBOX                 = "SKRZYNKA POCZTOWA",
     ITEMS_IN_MAILS          = "Przedmioty w mailach: ",
     GOLD_IN_MAILS           = "Gold w mailach: ",
     MAIL_INFO_TEXT          = "Masz |cFFFF00FF %d|r wiadomosci.\n%s\n%s",
@@ -40,7 +42,7 @@ _Lang["PL"] = {
     SET_BTN_RESTORE_DEF     = "Przywroc domyslne",
     SET_BTN_SAVE            = "Zapisz",
     TOTAL                   = "Razem",
-    PLAY_TIME_STATS         = "Statystyki czasu gry"
+    PLAY_TIME_STATS         = "Statystyki czasu gry",
 };
 
 function lang_exist(lang)
