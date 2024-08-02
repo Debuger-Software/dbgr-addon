@@ -192,7 +192,7 @@ local	frame = CreateFrame("Frame")
 		frame:RegisterEvent("MAIL_CLOSED")
 		frame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 		frame:SetScript("OnEvent", eventHandler)
-		frame:SetScript("OnUpdate", onUpdate)
+		-- frame:SetScript("OnUpdate", onUpdate)
 
 MsgBox = MainFrame
 MsgBox.header = MainFrame_Title
