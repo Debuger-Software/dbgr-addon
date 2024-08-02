@@ -213,4 +213,3 @@ function SlashCmdList.DBFRAME(msg, editbox)
 	if msg == "playtime" then TIME_REQ = true; RequestTimePlayed(); end														-- show total & current lvl play time
 	if msg == "get" then for k, v in pairs(DBGROPT) do print(k.." : "..tostring(v));	end; end							-- show current saved variables
 end
-

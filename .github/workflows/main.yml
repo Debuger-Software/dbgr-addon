@@ -15,7 +15,7 @@ jobs:
       - name: Klonowanie repo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1  # gets entire git history, needed for automatic changelogs
+          fetch-depth: 0  # gets entire git history, needed for automatic changelogs
 
       - name: Pakowanie i upload
         uses: BigWigsMods/packager@v2
