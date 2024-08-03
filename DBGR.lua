@@ -72,10 +72,7 @@ end
 local function eventHandler(self, event, ...)
 	if     event == "ADDON_LOADED" then
 		local loadedAddon = ...
-		if loadedAddon == ADDON_NAME then
-			if DBGROPT == nil then OnClick_RestoreDef(); end -- DBGROPT = {sound=true ,icon_size=24, msgbox_width=300, msgbox_height=100}; end	-- defaulting non existing options
-		end
-
+		if loadedAddon == ADDON_NAME and DBGROPT == nil then OnClick_RestoreDef(); end
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		local is_init_login, is_reloading_UI = ...
 		if is_init_login then showAlertOnScreen(format("%s %s (%s)", ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE),255,75,0,8,5,500) end
@@ -167,7 +164,7 @@ function IconSizeSlider_OnValueChanged(self,value,user)
 	IconSizeSlider.Text:SetText(format("%s: %d",_L("CHAT_ICON_SIZE_LABEL"), DBGROPT.icon_size));
 end
 function OnClick_RestoreDef()
-	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=26, locale="EN"};  --TODO: CHANGE TO "EN"
+	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=26, locale="EN"};
 	if SettingsFrame:IsShown() then	SettingsFrame:Hide(); SettingsFrame:Show();	end
 	print("DBGR Addon - ".._L("DEFAULT_SETTINGS_LOADED"));
 end

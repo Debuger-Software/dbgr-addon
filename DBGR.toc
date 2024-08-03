@@ -2,18 +2,18 @@
 ## Title: DBGR
 ## Author: Debuger
 ## IconTexture: Interface\AddOns\DBGR\img\d
-## Notes: |cFFFF0000D |r|cFF00FF00B |r|cFF0000FFG |r|cFFFFFF00R |r       0.6.3  ~rev.305~
+## Notes: |cFFFF0000D |r|cFF00FF00B |r|cFF0000FFG |r|cFFFFFF00R |r       0.6.3  ~rev.306~
 ## Version: 0.6.3
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: DBGROPT
 ## X-Category: Miscellaneous
 ## X-Curse-Project-ID: 1028809
-## X-Date: 03-08-2024 12:12:54
+## X-Date: 03-08-2024 12:17:46
 ## X-eMail: debuger@debuger.eu
 ## X-License: GPL3
 ## X-Release: Main
-## X-Revision: 305
+## X-Revision: 306
 
 locale.lua
 MainFrame.xml
