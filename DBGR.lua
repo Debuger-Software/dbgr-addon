@@ -87,7 +87,7 @@ local function eventHandler(self, event, ...)
 		local maxXp=UnitXPMax("player")
 		local percent = tonumber(format("%.1f", (xpgained/maxXp)*100))
 		local percent_total = tonumber(format("%.1f", (xp/maxXp)*100) + percent)
-		print(string.format("\r\nEXP:|cFFFFEE00 +%d|r|cFFEE0000 (-%.1fx)|r       |cFF22FF15 +%.1f%%|r        TOTAL:|cFF00FFFF %.1f%%|r \r\n", xpgained, (100 - percent_total)/percent, percent, percent_total))
+		print(string.format("\r\nEXP:|cFFFFEE00 +%d|r|cFFEE0000 (-%.1fx)|r       |cFF22FF15 +%.1f%%|r        %s:|cFF00FFFF %.1f%%|r \r\n", xpgained, (100 - percent_total)/percent, percent, _L("TOTAL"), percent_total))
 		showAlertOnScreen(string.format("+%.1f%%",percent),0,255,0,3,1,50)
 	elseif event == "PLAYER_LEVEL_UP" then
 		local talentGroup = GetActiveTalentGroup(false, false)
@@ -119,7 +119,7 @@ local function eventHandler(self, event, ...)
 			end
 				MsgBox.opener = "AH_OUTBID"
 		elseif	text:find("AFK") and DBGROPT.afk then
-			MsgBox:showMsgBox(_L("AFK_WARN"), "! ! !  AFK  WARNING  ! ! !")
+			MsgBox:showMsgBox(_L("AFK_WARN"), _L("SET_LABEL_AFK_WARNS"))
 			MsgBox.opener = "AFK_WARNING"
 		end
 	elseif event == "MAIL_INBOX_UPDATE" then
@@ -135,7 +135,7 @@ local function eventHandler(self, event, ...)
 end
 
 function OnShow_SettingsFrame(obj)
-	Title:SetText(format("%1$s%2$s%s %s (%s) - %s%2$s%1$s", LOGO(30), (" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, _L("SETTINGS"), LOGO(30)))
+	Title:SetText(format("%1$s%2$s%s %s (%s) - %s%2$s%1$s", LOGO(28), (" "):rep(5), ADDON_NAME, ADDON_VERSION, ADDON_REL_TYPE, _L("SETTINGS"), LOGO(28)))
 	SetNotifySounds:SetChecked(DBGROPT.sound);
 	SetAHNotify:SetChecked(DBGROPT.ah);
 	SetAfkNotify:SetChecked(DBGROPT.afk);
@@ -167,7 +167,7 @@ function IconSizeSlider_OnValueChanged(self,value,user)
 	IconSizeSlider.Text:SetText(format("%s: %d",_L("CHAT_ICON_SIZE_LABEL"), DBGROPT.icon_size));
 end
 function OnClick_RestoreDef()
-	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=24, locale="EN"};  --TODO: CHANGE TO "EN"
+	DBGROPT = {sound=true, xpinfo=true, ah=true, afk=true, icon_size=26, locale="EN"};  --TODO: CHANGE TO "EN"
 	if SettingsFrame:IsShown() then	SettingsFrame:Hide(); SettingsFrame:Show();	end
 	print("DBGR Addon - ".._L("DEFAULT_SETTINGS_LOADED"));
 end
